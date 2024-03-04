@@ -1,16 +1,17 @@
-import { Form } from "@remix-run/react";
+import { Form, NavLink } from "@remix-run/react";
 import { useState } from "react";
 
 export default function SignUp() {
 
   return (
-    <div className="flex justify-center items-center w-full">
-      <Form className="flex flex-col bg-white shadow-md p-4 rounded-xl w-full" id="sign-up-form" method="post">
-        <h1 className="mb-4 pb-3 border-b-2 border-black font-bold text-xl">Sign Up</h1>
+    <div className="flex flex-col justify-center items-center w-full xl:h-[100vh]">
+            <h1 className="mt-2 font-bold text-2xl">GetFit</h1>
+      <Form className="flex flex-col bg-white shadow-2xl p-4 rounded-xl w-[95%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[30%]" id="sign-up-form" method="post">
+        <h2 className="border-gray-300 mb-4 pb-3 border-b-2 font-medium text-xl">Sign Up</h2>
         <div className="flex mb-4 w-full">
       <div className="w-full">
         <label htmlFor="firstname">Firstname</label>
-        <input className="border-2 border-gray-700 p-1 rounded w-[95%]"
+        <input className="border-2 border-gray-300 p-1 rounded w-[95%]"
           id="firstname"
           type="text"
           name="firstname"
@@ -22,7 +23,7 @@ export default function SignUp() {
         <div className="w-full">
         <label htmlFor="lastname">Lastname</label>
        
-        <input className="border-2 border-gray-700 p-1 rounded w-[95%]"
+        <input className="border-2 border-gray-300 p-1 rounded w-[95%]"
           id="lastname"
           type="text"
           name="lastname"
@@ -35,7 +36,7 @@ export default function SignUp() {
 
         <div className="flex flex-col mb-4">
         <label htmlFor="mail">Mail</label>
-        <input className="border-2 border-gray-700 p-1 rounded w-full"
+        <input className="border-2 border-gray-300 p-1 rounded w-full"
           id="mail"
           type="email"
           name="mail"
@@ -50,7 +51,7 @@ export default function SignUp() {
 
 
         <input
-        className="border-2 border-gray-700 p-1 rounded w-full"
+        className="border-2 border-gray-300 p-1 rounded w-full"
           id="password"
           type="password"
           name="password"
@@ -62,7 +63,7 @@ export default function SignUp() {
 <div className="flex flex-col mb-4">
         <label htmlFor="address">Address</label>
         <input
-        className="border-2 border-gray-700 p-1 rounded w-full"
+        className="border-2 border-gray-300 p-1 rounded w-full"
           id="address"
           type="text"
           name="address"
@@ -77,7 +78,7 @@ export default function SignUp() {
 
         <label htmlFor="languages">Languages</label>
         <input
-        className="border-2 border-gray-700 p-1 rounded w-full"
+        className="border-2 border-gray-300 p-1 rounded w-full"
           id="languages"
           type="text"
           name="languages"
@@ -102,6 +103,11 @@ export default function SignUp() {
         <div className="mt-2 w-full text-white">
           <button className="bg-[#333] p-2 rounded w-full text-lg" type="submit">Sign Up</button>
         </div>
+        <div className="mt-5 text-center">
+      <p>
+        Already have an account? Sign in <NavLink className="text-blue-700 underline" to="/signin">here.</NavLink>
+      </p>
+      </div>
       </Form>
     </div>
   );
