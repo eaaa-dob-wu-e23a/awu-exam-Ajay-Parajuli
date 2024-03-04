@@ -3,15 +3,15 @@ import { useLoaderData } from "@remix-run/react";
 import mongoose from "mongoose";
 
 export async function loader() {
-  const entries = await mongoose.models.Entry.find({});
+  const entries = await mongoose.models.User.find({});
   return json({ entries });
 }
 
 export default function Index() {
-  const { entries } = useLoaderData();
+  const { entries } = useLoaderData(); 
 
   return (
-    <div className="p-8 text-slate-50 bg-slate-900">
+    <div className="bg-slate-900 p-8 text-slate-50">
       <code>
         <pre className="animate-pulse">{JSON.stringify(entries, null, 2)}</pre>
       </code>

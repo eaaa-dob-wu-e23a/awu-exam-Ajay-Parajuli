@@ -2,7 +2,7 @@ import { mongoose } from "mongoose";
 
 const { Schema } = mongoose;
 
-const entrySchema = new Schema(
+const userSchema = new Schema(
   {
     date: {
       type: Date,
@@ -28,8 +28,8 @@ const entrySchema = new Schema(
 // in the database (which will be created automatically).
 export const models = [
   {
-    name: "Entry",
-    schema: entrySchema,
-    collection: "entries",
+    name: "User",
+    schema: userSchema,
+    collection: "users",
   },
 ];
