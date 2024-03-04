@@ -1,9 +1,12 @@
-import { Form, NavLink } from "@remix-run/react";
+import { Form, NavLink, useActionData } from "@remix-run/react";
 import { useState } from "react";
 import { json, redirect } from "@remix-run/node";
 import mongoose from "mongoose";
 
 export default function SignUp() {
+const actionData = useActionData();
+console.log(actionData);
+
 
   return (
     <div className="flex flex-col justify-center items-center w-full xl:h-[100vh]">
@@ -25,8 +28,11 @@ export default function SignUp() {
         />
         </div>
 
-
-  
+        {actionData?.errors.firstname && (
+          <p className="mt-1 mb-0 text-red-500">
+            {actionData.errors.firstname.message}
+          </p>
+        )}
         <div className="w-[100%]">
 
         <label className="bg-black w-full" htmlFor="lastname"><span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
@@ -77,6 +83,11 @@ export default function SignUp() {
           placeholder="Type your password..."
         />
         </div>
+        {actionData?.errors.password && (
+          <p className="mt-1 mb-0 text-red-500">
+            {actionData.errors.password.message}
+          </p>
+        )}
 
 <div className="flex flex-col mb-4">
         <label className="font-medium text-slate-700 text-sm" htmlFor="address">Address</label>
@@ -132,14 +143,15 @@ export default function SignUp() {
 }
 
 export async function action({ request }) {
-  try {
-    const formData = await request.formData(); // get the form data
+  const formData = await request.formData(); 
+  try {// get the form data
     const newUser = Object.fromEntries(formData); // convert the form data to an object
     await mongoose.models.User.create(newUser); // create the user
 
     return redirect("/signin"); // redirect to the sign-in page
   } catch (error) {
     console.log(error);
-    return redirect("/signup");
+    return json( { errors: error.errors, values: Object.fromEntries(formData) },
+    { status: 400 },)
   }
 }
