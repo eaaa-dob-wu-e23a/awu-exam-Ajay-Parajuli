@@ -25,7 +25,6 @@ const userSchema = new Schema(
     age: {
       type: Number,
       required: true, // Ensure user ages are required
-    
     },
     gender: String,
     password: {
@@ -45,10 +44,12 @@ const eventSchema = new Schema(
     title: {
       type: String,
       required: true, // Ensure event titles are required
-      unique: true // Ensure event titles are unique
     },
     description: String,
-    date: Date,
+    date: {
+      type: Date,
+      required: true, // Ensure event dates are required
+    },
     created_by: {
       type: Schema.Types.ObjectId,
       ref: 'User'
@@ -57,8 +58,14 @@ const eventSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User'
   }], 
-    maxParticipants: Number,
-    address: String,
+    maxParticipants: {
+      type: Number,
+      required: true, // Ensure event maxParticipants are required
+    },
+    address: {
+      type: String,
+      required: true, // Ensure event addresses are required
+    },
     organizer: String,   
   },
   { timestamps: true }  // Automatically include createdAt and updatedAt fields
