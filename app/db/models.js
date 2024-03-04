@@ -7,14 +7,6 @@ const userSchema = new Schema(
     image: {
       type: String,
       required: true,
-      validate: {
-        validator: function (value) {
-          // Regular expression to validate URL format
-          const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
-          return urlRegex.test(value);
-        },
-        message: "Invalid image URL"
-      }
     }, // Close the 'image' property
 
     mail: {
