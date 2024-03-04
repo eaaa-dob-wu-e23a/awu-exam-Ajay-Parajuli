@@ -1,5 +1,7 @@
 import { Form, NavLink } from "@remix-run/react";
 import { useState } from "react";
+import { json, redirect } from "@remix-run/node";
+import mongoose from "mongoose";
 
 export default function SignUp() {
 
@@ -127,4 +129,17 @@ export default function SignUp() {
       </Form>
     </div>
   );
+}
+
+export async function action({ request }) {
+  try {
+    const formData = await request.formData(); // get the form data
+    const newUser = Object.fromEntries(formData); // convert the form data to an object
+    await mongoose.models.User.create(newUser); // create the user
+
+    return redirect("/signin"); // redirect to the sign-in page
+  } catch (error) {
+    console.log(error);
+    return redirect("/signup");
+  }
 }

@@ -7,7 +7,6 @@ const userSchema = new Schema(
   {
     image: {
       type: String,
-      required: true,
     }, // Close the 'image' property
 
     mail: {
@@ -35,8 +34,7 @@ const userSchema = new Schema(
     },
 
     age: {
-      type: Number,
-      required: true, // Ensure user ages are required
+      type: Number,// Ensure user ages are required
     },
 
     gender: String,
