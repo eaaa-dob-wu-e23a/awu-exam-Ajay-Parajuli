@@ -7,7 +7,6 @@ const userSchema = new Schema(
   {
     image: {
       type: String,
-      required: true,
     }, // Close the 'image' property
 
     mail: {
@@ -35,8 +34,7 @@ const userSchema = new Schema(
     },
 
     age: {
-      type: Number,
-      required: true, // Ensure user ages are required
+      type: Number,// Ensure user ages are required
     },
 
     gender: String,
@@ -83,8 +81,7 @@ const eventSchema = new Schema(
       validate: {
         validator: function (value) {
           // Regular expression to validate URL format
-          const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
-          return urlRegex.test(value);
+          return /^(http|https):\/\/[^\s$.?#].[^\s]*$/.test(value);
         },
         message: "Invalid image URL"
       }
