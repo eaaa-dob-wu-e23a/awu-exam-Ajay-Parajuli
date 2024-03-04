@@ -18,7 +18,7 @@ export const links = () => [
 ];
 
 export function meta() {
-  return [{ title: "Work Journal" }];
+  return [{ title: "GetFit" }];
 }
 
 export default function App() {
@@ -31,7 +31,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Nav />
+ <Nav />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
