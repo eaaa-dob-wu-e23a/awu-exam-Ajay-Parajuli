@@ -8,13 +8,11 @@ export async function loader() {
 }
 
 export default function Index() {
-  const { entries } = useLoaderData(); 
+
 
   return (
-    <div className="bg-slate-900 p-8 text-slate-50">
-      <code>
-        <pre className="animate-pulse">{JSON.stringify(entries, null, 2)}</pre>
-      </code>
+    <div className="">
+    
     </div>
   );
 }
