@@ -4,25 +4,35 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    image: String,
+    image: {
+      type: String,
+      required: true, // Ensure user images are required
+    },
     mail: {
       type: String,
       required: true, // Ensure user emails are required
       unique: true // Ensure user emails are unique
     },
-    firstname: String,
-    lastname: String,
-    age: Number,
+    firstname: {
+      type: String,
+      required: true, // Ensure user first names are required
+    },
+    lastname: {
+      type: String,
+      required: true, // Ensure user last names are required
+    
+    },
+    age: {
+      type: Number,
+      required: true, // Ensure user ages are required
+    
+    },
     gender: String,
     password: {
       type: String,
       required: true, // Ensure user passwords are required
       select: false // Automatically exclude from query results
     },
-    registered_events: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Event'
-    }], 
     languages: [String],
     address: String,   
   },
@@ -53,6 +63,8 @@ const eventSchema = new Schema(
   },
   { timestamps: true }  // Automatically include createdAt and updatedAt fields
  );
+
+
 
 
 export const models = [
