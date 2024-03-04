@@ -4,28 +4,29 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    date: {
-      type: Date,
-      required: true,
-    },
-    type: {
+    image: String,
+    mail: {
       type: String,
-      enum: ["work", "learning", "interesting-thing"],
-      required: true,
+      required: true, // Ensure user emails are required
+      unique: true // Ensure user emails are unique
     },
-    text: {
+    firstname: String,
+    lastname: String,
+    age: Number,
+    gender: String,
+    password: {
       type: String,
-      required: true,
+      required: true, // Ensure user passwords are required
+      select: false // Automatically exclude from query results
     },
+    registered_events: [String], 
+    languages: [String],
+    address: String,   
   },
-  // Automatically add `createdAt` and `updatedAt` timestamps:
-  // https://mongoosejs.com/docs/timestamps.html
-  { timestamps: true },
+  { timestamps: true }  // Automatically include createdAt and updatedAt fields
 );
 
-// For each model you want to create, please define the model's name, the
-// associated schema (defined above), and the name of the associated collection
-// in the database (which will be created automatically).
+
 export const models = [
   {
     name: "User",
