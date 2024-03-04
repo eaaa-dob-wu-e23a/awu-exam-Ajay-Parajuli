@@ -99,7 +99,7 @@ export default function SignUp() {
           type="text"
           name="languages"
           aria-label="languages"
-          placeholder="Type the languages you speak..."
+          placeholder="fx. english, french, spanish..."
           autoComplete="off"
         />
 
