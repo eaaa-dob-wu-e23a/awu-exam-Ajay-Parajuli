@@ -81,8 +81,7 @@ const eventSchema = new Schema(
       validate: {
         validator: function (value) {
           // Regular expression to validate URL format
-          const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
-          return urlRegex.test(value);
+          return /^(http|https):\/\/[^\s$.?#].[^\s]*$/.test(value);
         },
         message: "Invalid image URL"
       }
