@@ -7,6 +7,13 @@ const userSchema = new Schema(
   {
     image: {
       type: String,
+      validate: {
+        validator: function (value) {
+          // Regular expression to validate URL format
+          return /^(http|https):\/\/[^\s$.?#].[^\s]*$/.test(value);
+        },
+        message: "Invalid image URL"
+      }
     }, // Close the 'image' property
 
     mail: {
@@ -22,15 +29,28 @@ const userSchema = new Schema(
         message: "Invalid email address"
       }
     },
-
     firstname: {
       type: String,
-      required: true, // Ensure user first names are required
+      required: true,
+      validate: {
+        validator: function (value) {
+          // Add your validation logic for firstname here
+          return value.length > 0; // For example, ensuring it's not empty
+        },
+        message: "First name is required"
+      }
     },
 
     lastname: {
       type: String,
-      required: true, // Ensure user last names are required
+      required: true,
+      validate: {
+        validator: function (value) {
+          // Add your validation logic for lastname here
+          return value.length > 0; // For example, ensuring it's not empty
+        },
+        message: "Last name is required"
+      }
     },
 
     age: {
@@ -89,7 +109,14 @@ const eventSchema = new Schema(
     description: String,
     date: {
       type: Date,
-      required: true, // Ensure event dates are required
+      required: true,
+      validate: {
+        validator: function (value) {
+          // Check if the provided date is greater than the current date
+          return value > new Date();
+        },
+        message: "Event date must be in the future"
+      }
     },
     created_by: {
       type: Schema.Types.ObjectId,
