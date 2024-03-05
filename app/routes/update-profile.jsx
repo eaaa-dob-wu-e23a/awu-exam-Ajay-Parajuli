@@ -5,7 +5,15 @@ import mongoose from "mongoose";
 import { authenticator } from "../services/auth.server";
 import { useNavigate } from "@remix-run/react";
 
-
+export async function loader({ request }) {
+    const user = await authenticator.isAuthenticated(request, {
+      // Check if the user is authenticated and get the user data
+      failureRedirect: "/signin",
+    });
+    // check if the users data is updated in the database
+      const updatedUser = await mongoose.models.User.findById(user._id);
+      return { user: updatedUser };
+  }
 
 
 export default function UpdateProfile() {
