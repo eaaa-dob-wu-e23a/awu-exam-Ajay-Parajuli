@@ -105,22 +105,26 @@ export default function Event() {
     ))
     }
 </div>
-
 <div>
-{authUser._id === event.created_by._id && (
-        <div className="btns">
-          <Form action="update">
-            <button>Update</button>
-          </Form>
-          <Form action="destroy" method="post">
-            <button>Delete</button>
-          </Form>
-        </div>
-      )}
-  <Form method="post">
-  <button className="bg-blue-500 p-2 rounded w-full text-white">Join event</button>
-  </Form>
+  {authUser._id === event.created_by._id && (
+    <div className="flex mt-5 pb-5">
+      <Form action="update">
+        <button className="bg-black mr-5 ml-5 p-1 rounded text-white">Update</button>
+      </Form>
+      <Form action="destroy" method="post">
+        <button className="bg-red-600 p-1 rounded text-white">Delete</button>
+      </Form>
+    </div>
+  )}
+
+  {/* Render the join event button only if the authUser._id is not the same */}
+  {authUser._id !== event.created_by._id && (
+    <Form method="post">
+      <button className="bg-blue-500 p-2 rounded w-full text-white">Join event</button>
+    </Form>
+  )}
 </div>
+
       </div>
 
         </>   
