@@ -5,9 +5,10 @@ export default function EventCard({ post }) {
   return (
     <article className="post-card">
       <UserAvatar user={post.user} />
-      <img src={post.image} alt={post.caption} />
-      <h3>{post.caption}</h3>
-      <p>Likes: {post.likes}</p>
+      <img src={post.image} alt={post.description} />
+      <h3>{post.description}</h3>
+      <p>Max: {post.maxPaticipants}</p>
+      <p>Address: {post.address}</p>
     </article>
   );
 }

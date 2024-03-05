@@ -10,7 +10,7 @@ export default function UserAvatar({ user }) {
         <img src={user.image} alt={user.firstname} />
         <span>
           <h3>{user.firstname} {user.lastname}</h3>
-          <p>{user.gender}</p>
+          <p>{user.age}</p>
         </span>
       </div>
     );
