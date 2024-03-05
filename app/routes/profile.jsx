@@ -26,8 +26,8 @@ export default function Profile() {
 
 return (
     <>
-        <h1 className="p-3 font-medium text-2xl text-center">Profile</h1>
-        <div className="xl:flex xl:justify-center xl:items-center shadow-2xl xl:shadow-none p-5 xl:w-full xl:h-[80vh] leading-7">
+        <div className="xl:flex xl:flex-col xl:justify-center xl:items-center shadow-2xl xl:shadow-none p-5 xl:w-full xl:h-[80vh] leading-7 x">
+        <h1 className="p-3 font-medium text- text-2xl">Profile</h1>
             <div className="flex xl:flex-row flex-col bg-white xl:shadow-2xl xl:w-[70%]">
                 <img
                     src={loaderData.user.image}
