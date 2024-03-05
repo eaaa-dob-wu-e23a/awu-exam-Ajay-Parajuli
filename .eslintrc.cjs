@@ -17,8 +17,12 @@ module.exports = {
   env: {
     browser: true,
     commonjs: true,
-    node: true,
     es6: true,
+  },
+  globals: {
+    // Because loaders and actions are defined in the app's routes, allow
+    // reading from `process`.
+    process: "readonly", 
   },
 
   // Base config
@@ -34,6 +38,9 @@ module.exports = {
         "plugin:react-hooks/recommended",
         "plugin:jsx-a11y/recommended",
       ],
+      rules: {
+        "react/prop-types": "off", //
+      },
       settings: {
         react: {
           version: "detect",
