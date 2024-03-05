@@ -30,8 +30,8 @@ export const meta = () => {
 export default function Events() {
     const { posts } = useLoaderData();
     return (
-        <div className="m-2">
-         <section className="">
+        <div className="">
+         <section className="flex flex-row flex-wrap gap-6 mt-5 p-2 lg:p-4 w-full">
         {posts.map(post => (
           <Link key={post._id} className="post-link" to={`${post._id}`}>
             <EventCard post={post} />
