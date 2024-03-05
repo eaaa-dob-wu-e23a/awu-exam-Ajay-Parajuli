@@ -36,6 +36,13 @@ export default function Event() {
     return formattedDate;
   };
 
+  function confirmDelete(event) {
+    const response = confirm("Please confirm you want to delete this post.");
+    if (!response) {
+      event.preventDefault();
+    }
+  }
+
   return (
     <>
       <div className="shadow-xl m-auto mb-10 xl:w-[50%]">
@@ -96,7 +103,7 @@ export default function Event() {
               <Form action="update">
                 <button className="bg-black mr-5 ml-5 p-1 rounded text-white">Update</button>
               </Form>
-              <Form action="destroy" method="post">
+              <Form action="destroy" method="post"  onSubmit={confirmDelete}>
                 <button className="bg-red-600 p-1 rounded text-white">Delete</button>
               </Form>
             </div>
