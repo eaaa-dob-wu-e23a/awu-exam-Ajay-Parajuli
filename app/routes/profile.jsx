@@ -49,8 +49,11 @@ return (
                 <p className="text-gray-500">Address: {loaderData.user.address}</p>
               
 
-                <div className="mt-5">
+                <div className="flex justify-between mt-5 w-full">
                     <Link to="/update-profile" className="bg-black p-2 rounded text-white">Edit profile</Link>
+                    <Form method="post">
+        <button className="bg-red-600 p-2 rounded text-gray-200">Logout</button>
+      </Form>
                 </div>
                 </div>
             </div>
@@ -58,4 +61,13 @@ return (
     </>
 );
 }
+
+export async function action({ request }) {
+    const user = await authenticator.isAuthenticated(request);
+    if (user) { // if user is authenticated
+      await authenticator.logout(request, { redirectTo: "/signin" });
+    } else {
+      redirect("/signin");
+    }
+  }
 
