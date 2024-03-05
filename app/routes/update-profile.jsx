@@ -1,29 +1,25 @@
-import {  redirect } from '@remix-run/node';
-import { Form, useLoaderData } from "@remix-run/react";
+import {  redirect, json } from '@remix-run/node';
+import { Form, useLoaderData, useActionData } from "@remix-run/react";
 import { useState } from "react";
 import mongoose from "mongoose";
 import { authenticator } from "../services/auth.server";
 import { useNavigate } from "@remix-run/react";
 
 export async function loader({ request }) {
-    try {
-        const user = await authenticator.isAuthenticated(request, {
-            // Check if the user is authenticated and get the user data
-            failureRedirect: "/signin",
-        });
-        // Get the user data from the database
-        const updatedUser = await mongoose.models.User.findById(user._id);
-        return { user: updatedUser };
-    } catch (error) {
-        // Handle any errors that occur during the loading process
-        console.error(error);
-        // You can redirect the user to an error page or handle the error in any other way
-        throw new Error("Failed to load user data");
-    }
-}
+    const user = await authenticator.isAuthenticated(request, {
+      // Check if the user is authenticated and get the user data
+      failureRedirect: "/signin",
+    });
+    // check if the users data is updated in the database
+      const updatedUser = await mongoose.models.User.findById(user._id);
+      return { user: updatedUser };
+  }
+  
 
 
 export default function UpdateProfile() {
+    const [currentErrorIndex, setCurrentErrorIndex] = useState(0); // State to track the current error index
+    const actionData = useActionData();
     const { user } = useLoaderData();
     const [image, setImage] = useState(user.image);
     const navigate = useNavigate(); 
@@ -37,6 +33,13 @@ return (
 <Form className="flex flex-col shadow-2xl p-4 rounded-xl w-[95%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[50%]" id="sign-up-form" method="post">
 <h2 className="border-gray-300 mb-4 pb-3 border-b-2 font-medium text-xl">Update Profile</h2>
 <div>
+<div className="bg-red-500 mb-3 rounded w-full text-center">
+          {actionData?.errors && Object.keys(actionData.errors).length > 0 && (
+            <p className="p-1 text-white">
+              {Object.values(actionData.errors)[currentErrorIndex].message}
+            </p>
+          )}
+        </div>
 </div>
 <div className="flex justify-between mb-4 w-full">
 <div className="w-[100%]">
@@ -151,34 +154,41 @@ className="border-2 border-gray-300 p-1 rounded w-full"
 }
 
 
-export async function action({ request}) {
-    // Protect the route
-    const authUser = await authenticator.isAuthenticated(request, {
-      failureRedirect: "/signin",
-    });
+export async function action({ request }) {
+    const formData = await request.formData();
+    try {
+      // Protect the route
+      const authUser = await authenticator.isAuthenticated(request, {
+        failureRedirect: "/signin",
+      });
   
-    // Fetch the user to check if the current user is the creator
-    const userToUpdate = await mongoose.models.User.findById(authUser._id);
+      // Fetch the user to check if the current user is the creator
+      const userToUpdate = await mongoose.models.User.findById(authUser._id);
   
-    if (!userToUpdate) {
-      // If userToUpdate is not found, handle the error appropriately
-      throw new Error("User not found");
+      if (!userToUpdate) {
+        // If userToUpdate is not found, handle the error appropriately
+        throw new Error("User not found");
+      }
+  
+      // Update the user document based on the form data
+      const userData = Object.fromEntries(formData);
+  
+      // Update userToUpdate with the new data
+      userToUpdate.firstname = userData.firstname;
+      userToUpdate.lastname = userData.lastname;
+      userToUpdate.languages = userData.languages;
+      userToUpdate.image = userData.image;
+      userToUpdate.address = userData.address;
+      userToUpdate.gender = userData.gender;
+  
+      await userToUpdate.save();
+  
+      // Redirect to the profile page
+      return redirect("/profile");
+    } catch (error) {
+        console.log(error);
+        return json( { errors: error.errors, values: Object.fromEntries(formData) },
+        { status: 400 },)
+      }
     }
   
-    // Update the user document based on the form data
-    const formData = await request.formData();
-    const userData = Object.fromEntries(formData);
-  
-    // Update userToUpdate with the new data
-    userToUpdate.firstname = userData.firstname;
-    userToUpdate.lastname = userData.lastname;
-    userToUpdate.languages = userData.languages;
-    userToUpdate.image = userData.image;
-    userToUpdate.address = userData.address;
-    userToUpdate.gender = userData.gender;
-
-    await userToUpdate.save();
-  
-    // Redirect to the profile page
-    return redirect("/profile");
-  }
