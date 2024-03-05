@@ -49,8 +49,11 @@ return (
                 <p className="text-gray-500">Address: {loaderData.user.address}</p>
               
 
-                <div className="mt-5">
+                <div className="flex justify-between mt-5 w-full">
                     <Link to="/update-profile" className="bg-black p-2 rounded text-white">Edit profile</Link>
+                    <Form method="post">
+        <button className="">Logout</button>
+      </Form>
                 </div>
                 </div>
             </div>
