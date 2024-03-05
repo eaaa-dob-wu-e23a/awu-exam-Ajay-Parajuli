@@ -149,3 +149,36 @@ className="border-2 border-gray-300 p-1 rounded w-full"
 </div>
 );
 }
+
+
+export async function action({ request}) {
+    // Protect the route
+    const authUser = await authenticator.isAuthenticated(request, {
+      failureRedirect: "/signin",
+    });
+  
+    // Fetch the user to check if the current user is the creator
+    const userToUpdate = await mongoose.models.User.findById(authUser._id);
+  
+    if (!userToUpdate) {
+      // If userToUpdate is not found, handle the error appropriately
+      throw new Error("User not found");
+    }
+  
+    // Update the user document based on the form data
+    const formData = await request.formData();
+    const userData = Object.fromEntries(formData);
+  
+    // Update userToUpdate with the new data
+    userToUpdate.firstname = userData.firstname;
+    userToUpdate.lastname = userData.lastname;
+    userToUpdate.languages = userData.languages;
+    userToUpdate.image = userData.image;
+    userToUpdate.address = userData.address;
+    userToUpdate.gender = userData.gender;
+
+    await userToUpdate.save();
+  
+    // Redirect to the profile page
+    return redirect("/profile");
+  }
