@@ -48,6 +48,7 @@ Firstname
   type="text"
   name="firstname"
   aria-label="firstname"
+  defaultValue={user.firstname}
   placeholder="Type your firstname..."
   autoComplete="off"
 />
@@ -63,6 +64,7 @@ Lastname
   type="text"
   name="lastname"
   aria-label="lastname"
+    defaultValue={user.lastname}
   placeholder="Type your lastname..."
   autoComplete="off"
 />
@@ -83,6 +85,7 @@ className="border-2 border-gray-300 p-1 rounded w-full"
   type="text"
   name="address"
   aria-label="address"
+    defaultValue={user.address}
   placeholder="City, Country..."
   autoComplete="off"
 />
@@ -97,6 +100,7 @@ className="border-2 border-gray-300 p-1 rounded w-full"
   id="languages"
   type="text"
   name="languages"
+    defaultValue={user.languages}
   aria-label="languages"
   placeholder="fx. english, french, spanish..."
   autoComplete="off"
@@ -106,13 +110,13 @@ className="border-2 border-gray-300 p-1 rounded w-full"
 
 <fieldset className="flex mb-4">
   <legend className="font-medium text-slate-700 text-sm">Gender:</legend>
-  <input className="mr-2" type="radio" id="male" name="gender" value="Male" />
+  <input className="mr-2" type="radio" defaultChecked={user.gender === "Male"} id="male" name="gender" value="Male" />
   <label className="mr-4" htmlFor="male">Male</label>
   <br />
-  <input className="mr-2" type="radio" id="female" name="gender" value="Female" />
+  <input className="mr-2" type="radio" id="female" name="gender" defaultChecked={user.gender === "Female"} value="Female" />
   <label className="mr-4" htmlFor="female">Female</label>
   <br />
-  <input className="mr-2" type="radio" id="other" name="gender" value="Other" />
+  <input className="mr-2" type="radio" id="other" name="gender" defaultChecked={user.gender === "Other"} value="Other" />
   <label className="mr-4" htmlFor="other">Other</label>
 </fieldset>
 <div className="mt-2 w-full text-white">
