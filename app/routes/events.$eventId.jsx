@@ -26,6 +26,13 @@ export const meta = () => {
 
 export default function Event() {
     const { event, authUser, users } = useLoaderData();
+
+    const formatDate = (dateString) => {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
+      return formattedDate;
+  };
+
     return(
       <>
       <div>
@@ -41,19 +48,30 @@ export default function Event() {
         </span>
       </div>
       <div className="p-2">
-        <h3 className="font-medium">About me</h3>
+        <h3 className="mb-1 font-medium text-lg">About me</h3>
         <p className="text-gray-500">Languages: {event.created_by.languages.map((language, index) => (
             <span key={language}>
                 {language}{index !== event.created_by.languages.length - 1 ? ', ' : ''}
             </span>
         ))}</p>
         <p className="text-gray-500">Age: {event.created_by.age}</p>
+        <p className="text-gray-500">Gender: {event.created_by.gender}</p>
+      </div>
+      <div className="p-2">
+      <h3 className="font-medium">Bio</h3>
+
+      <p className="text-gray-500">About: {event.created_by.about}</p>
+
       </div>
 
-          <p>{event.date}</p>
-          <p>{event.address}</p>
+<div className="p-2">
+<h3 className="mb-1 font-medium text-lg">About the Event</h3>
+
+<p className="text-gray-500">Event date: {formatDate(event.date)}</p>
+          <p>Event address: {event.address}</p>
           <p>{event.maxParticipants}</p>
           <p>{event.organizer}</p>
+          </div>
       </div>
         <div className="text-black">
             {users.map((user) => (
