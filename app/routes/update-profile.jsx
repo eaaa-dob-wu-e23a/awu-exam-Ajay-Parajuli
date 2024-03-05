@@ -176,7 +176,7 @@ export async function action({ request }) {
       // Update userToUpdate with the new data
       userToUpdate.firstname = userData.firstname;
       userToUpdate.lastname = userData.lastname;
-      userToUpdate.languages = userData.languages;
+      userToUpdate.languages = userData.languages.split(",").map(lang => lang.trim()); // Split by comma and remove extra spaces
       userToUpdate.image = userData.image;
       userToUpdate.address = userData.address;
       userToUpdate.gender = userData.gender;

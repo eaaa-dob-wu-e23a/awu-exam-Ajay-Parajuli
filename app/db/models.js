@@ -73,7 +73,33 @@ const userSchema = new Schema(
       }
     },
 
-    languages: [String],
+    languages: {
+      type: [String],
+      validate: {
+        validator: function(languages) {
+          // Validate each language in the array
+          for (let language of languages) {
+            // Check if the language string contains a space
+            if (language.includes(' ')) {
+              return false;
+            }
+    
+            // Split the language string by comma
+            const splitLanguages = language.split(',');
+    
+            for (const splitLanguage of splitLanguages) {
+              // Trim the split language and check if it's empty
+              if (!splitLanguage || splitLanguage.trim() === '') {
+                return false;
+              }
+            }
+          }
+          return true;
+        },
+        message: 'Languages must be comma separated list - Fx "english, spanish, french"'
+      }
+    },
+
 
     address: String,
   },
