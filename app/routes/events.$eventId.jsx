@@ -102,7 +102,7 @@ export default function Event() {
             </div>
           )}
           {/* Render the join event button only if the authUser._id is not the same */}
-          {authUser._id !== event.created_by._id ? (
+    
   <Fetcher.Form method="post">
     {event.participants.includes(authUser._id) ? (
       <button className="bg-red-500 p-2 rounded w-full text-white" type="submit">Leave event</button>
@@ -110,7 +110,6 @@ export default function Event() {
       <button className="bg-blue-500 p-2 rounded w-full text-white" type="submit">Join event</button>
     )}
   </Fetcher.Form>
-) : null}
 
         </div>
       </div>
