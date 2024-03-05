@@ -1,18 +1,13 @@
-import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import mongoose from "mongoose";
+import { authenticator } from "../services/auth.server";
 
-export async function loader() {
-  const entries = await mongoose.models.User.find({});
-  return json({ entries });
-}
+export const meta = () => {
+  return [{ title: "GetFit App" }];
+};
 
-export default function Index() {
-
-
-  return (
-    <div className="">
-    
-    </div>
-  );
+export async function loader({ request }) {
+  // return redirect("/events");
+  return await authenticator.isAuthenticated(request, {
+    successRedirect: "/events",
+    failureRedirect: "/signin"
+  });
 }

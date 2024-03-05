@@ -32,9 +32,9 @@ export default function Events() {
     return (
         <div className="">
          <section className="flex flex-row flex-wrap gap-6 mt-5 p-2 lg:p-4 w-full">
-        {posts.map(post => (
-          <Link key={post._id} className="post-link" to={`${post._id}`}>
-            <EventCard post={post} />
+        {posts.map(event => (
+          <Link key={event._id} className="post-link" to={`${event._id}`}>
+          <EventCard post={event} />
           </Link>
         ))}
       </section>
