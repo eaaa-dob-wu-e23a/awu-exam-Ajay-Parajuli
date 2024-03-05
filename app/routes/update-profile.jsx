@@ -6,17 +6,31 @@ import { authenticator } from "../services/auth.server";
 import { useNavigate } from "@remix-run/react";
 
 export async function loader({ request }) {
-    const user = await authenticator.isAuthenticated(request, {
-      // Check if the user is authenticated and get the user data
-      failureRedirect: "/signin",
-    });
-    // check if the users data is updated in the database
-      const updatedUser = await mongoose.models.User.findById(user._id);
-      return { user: updatedUser };
-  }
+    try {
+        const user = await authenticator.isAuthenticated(request, {
+            // Check if the user is authenticated and get the user data
+            failureRedirect: "/signin",
+        });
+        // Get the user data from the database
+        const updatedUser = await mongoose.models.User.findById(user._id);
+        return { user: updatedUser };
+    } catch (error) {
+        // Handle any errors that occur during the loading process
+        console.error(error);
+        // You can redirect the user to an error page or handle the error in any other way
+        throw new Error("Failed to load user data");
+    }
+}
 
 
 export default function UpdateProfile() {
+    const { user } = useLoaderData();
+    const [image, setImage] = useState(user.image);
+    const navigate = useNavigate(); 
+
+    function handleCancel() {
+        navigate(-1);
+      }
 return (
     <div className="flex flex-col justify-center items-center w-full xl:h-[100vh]">
     <h1 className="mt-2 font-bold text-3xl">GetFit</h1>
@@ -103,6 +117,7 @@ className="border-2 border-gray-300 p-1 rounded w-full"
 </fieldset>
 <div className="mt-2 w-full text-white">
   <button className="bg-black p-2 rounded w-full text-lg" type="submit">Update</button>
+  <button className="" onClick={handleCancel}>Cancel</button>
 </div>
 </Form>
 </div>
