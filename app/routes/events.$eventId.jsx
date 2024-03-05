@@ -17,7 +17,6 @@ export async function loader({ request, params }) {
     const event = await mongoose.models.Event.findById(params.eventId).populate("created_by");
 
     const users = await mongoose.models.User.find({ _id: { $in: event.participants } });
-    console.log(users);
 
     return json({ event, authUser, users });
   } catch (error) {
@@ -102,18 +101,15 @@ export default function Event() {
           )}
           {/* Render the join event button only if the authUser._id is not the same */}
           {authUser._id !== event.created_by._id ? (
-            <Form method="post">
-              {event.participants.includes(authUser._id) ? (
-                <button className="bg-red-500 p-2 rounded w-full text-white">Leave event</button>
-              ) : (
-                <button className="bg-blue-500 p-2 rounded w-full text-white">Join event</button>
-              )}
-            </Form>
-          ) : (
-            <Form method="post">
-              <button className="bg-red-500 p-2 rounded w-full text-white">Leave event</button>
-            </Form>
-          )}
+  <Form method="post">
+    {event.participants.includes(authUser._id) ? (
+      <button className="bg-red-500 p-2 rounded w-full text-white" type="submit">Leave event</button>
+    ) : (
+      <button className="bg-blue-500 p-2 rounded w-full text-white" type="submit">Join event</button>
+    )}
+  </Form>
+) : null}
+
         </div>
       </div>
     </>
@@ -130,8 +126,19 @@ export async function action({ request, params }) {
     const user = await mongoose.models.User.findById(authUser._id);
     const event = await mongoose.models.Event.findById(params.eventId);
 
-    event.participants.push(user._id);
-    await event.save();
+    if (!event) {
+      throw new Error('Event not found');
+    }
+
+    const participantIndex = event.participants.indexOf(user._id);
+    if (participantIndex !== -1) {
+      event.participants.splice(participantIndex, 1); // Remove the user from the participants array
+      await event.save();
+    } else {
+      // Add the user to the participants array
+      event.participants.push(user._id);
+      await event.save();
+    }
 
     // Redirect to the event page
     return redirect("#");
@@ -141,3 +148,4 @@ export async function action({ request, params }) {
     throw error; // Rethrow the error to be handled by Remix or other error handling middleware
   }
 }
+
