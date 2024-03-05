@@ -32,7 +32,7 @@ export default function UpdateProfile() {
         navigate(-1);
       }
 return (
-    <div className="flex flex-col justify-center items-center w-full xl:h-[85vh]">
+    <div className="flex flex-col justify-center items-center w-full md:h-[95vh] xl:h-[85vh]">
     <h1 className="mt-2 font-bold text-3xl">GetFit</h1>
 <Form className="flex flex-col shadow-2xl p-4 rounded-xl w-[95%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[50%]" id="sign-up-form" method="post">
 <h2 className="border-gray-300 mb-4 pb-3 border-b-2 font-medium text-xl">Update Profile</h2>
@@ -120,7 +120,7 @@ className="border-2 border-gray-300 p-1 rounded w-full"
   <label className="mr-4" htmlFor="other">Other</label>
 </fieldset>
 <div className="flex flex-col">
-              <label className='font-medium text-slate-700 text-sm' htmlFor="image">Image URL</label>
+              <label className='font-medium text-slate-700 text-sm' htmlFor="image">Image URL:</label>
 
               <input
                 name="image"
@@ -130,7 +130,7 @@ className="border-2 border-gray-300 p-1 rounded w-full"
                 onChange={e => setImage(e.target.value)}
                 placeholder="Paste an image URL..."
               />
-                <div className="img-prev">
+                <div className="mt-1">
               <label className="" htmlFor="image-preview">Image Preview</label>
               <img
                 id="image-preview"
