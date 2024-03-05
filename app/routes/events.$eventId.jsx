@@ -35,9 +35,9 @@ export default function Event() {
 
     return(
       <>
-      <div>
-        <div className="relative">
-          <img className=""  src={event.image} alt={event.description} />
+      <div className="shadow-xl m-auto mb-10 xl:pt-10 xl:w-[50%]">
+        <div className="relative w-full">
+          <img className="rounded w-full lg:h-[400px] object-cover"  src={event.image} alt={event.description} />
           <h1 className="top-1/2 left-1/2 absolute bg-white bg-opacity-75 rounded w-[90%] font-medium text-center text-lg transform -translate-x-1/2 -translate-y-1/2">{event.description}</h1>
           </div>
           <div className="flex p-2">
@@ -81,18 +81,19 @@ export default function Event() {
       <p className="text-gray-500">{event.created_by.about}</p>
 
       </div>
-      </div>
       <h3 className="mb-1 p-2 font-medium text-lg">People who are going</h3>
 
-        <div className="flex flex-wrap justify-around p-2 w-full text-black">
-            {users.map((user) => (
-                <div className="" key={user._id}>
-                    <img className="rounded-full w-[50px] h-[50px] object-cover" src={user.image} alt={event.created_by.firstname} />
-                    <p className="text-center">{user.firstname}</p>
-                </div>
-            ))
-            }
+<div className="flex flex-wrap justify-around p-2 w-full text-black">
+    {users.map((user) => (
+        <div className="" key={user._id}>
+            <img className="rounded-full w-[50px] h-[50px] object-cover" src={user.image} alt={event.created_by.firstname} />
+            <p className="text-center">{user.firstname}</p>
         </div>
+    ))
+    }
+</div>
+      </div>
+
         </>   
     );
 }
