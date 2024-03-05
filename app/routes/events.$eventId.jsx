@@ -1,6 +1,6 @@
 import { authenticator } from "../services/auth.server";
 import mongoose from "mongoose";
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 
 
@@ -118,11 +118,16 @@ export default function Event() {
   )}
 
   {/* Render the join event button only if the authUser._id is not the same */}
-  {authUser._id !== event.created_by._id && (
-    <Form method="post">
-      <button className="bg-blue-500 p-2 rounded w-full text-white">Join event</button>
-    </Form>
-  )}
+  {authUser._id !== event.created_by._id ? (
+  <Form method="post">
+    <button className="bg-blue-500 p-2 rounded w-full text-white">Join event</button>
+  </Form>
+) : (
+  <Form method="post">
+    <button className="bg-red-500 p-2 rounded w-full text-white">Leave event</button>
+  </Form>
+)}
+
 </div>
 
       </div>
@@ -130,3 +135,27 @@ export default function Event() {
         </>   
     );
 }
+
+
+export async function action({ request, params}) {
+
+  try {
+    // Protect the route
+    const authUser = await authenticator.isAuthenticated(request, {
+      failureRedirect: "/signin",
+    });
+
+    const user = await mongoose.models.User.findById(authUser._id);
+    const event = await mongoose.models.Event.findById(params.eventId);
+
+    event.participants.push(user._id);
+    await event.save();
+
+    // Redirect to the event page
+    return redirect("#");
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
