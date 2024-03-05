@@ -1,7 +1,8 @@
 import { authenticator } from "../services/auth.server";
 import mongoose from "mongoose";
 import { json, redirect } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData, useFetcher } from "@remix-run/react";
+
 
 export const meta = () => {
   return [{ title: "GetFit app" }];
@@ -26,6 +27,7 @@ export async function loader({ request, params }) {
 }
 
 export default function Event() {
+  const Fetcher = useFetcher();
   const { event, authUser, users } = useLoaderData();
 
   const formatDate = (dateString) => {
@@ -101,13 +103,13 @@ export default function Event() {
           )}
           {/* Render the join event button only if the authUser._id is not the same */}
           {authUser._id !== event.created_by._id ? (
-  <Form method="post">
+  <Fetcher.Form method="post">
     {event.participants.includes(authUser._id) ? (
       <button className="bg-red-500 p-2 rounded w-full text-white" type="submit">Leave event</button>
     ) : (
       <button className="bg-blue-500 p-2 rounded w-full text-white" type="submit">Join event</button>
     )}
-  </Form>
+  </Fetcher.Form>
 ) : null}
 
         </div>
