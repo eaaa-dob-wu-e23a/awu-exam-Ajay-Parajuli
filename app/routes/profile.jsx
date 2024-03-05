@@ -27,13 +27,14 @@ export default function Profile() {
 return (
     <>
         <h1 className="p-3 font-medium text-2xl text-center">Profile</h1>
-        <div className="shadow-2xl p-5 leading-7">
-            <div className="flex flex-col">
+        <div className="xl:flex xl:justify-center xl:items-center shadow-2xl xl:shadow-none p-5 xl:w-full xl:h-[80vh] leading-7">
+            <div className="flex xl:flex-row flex-col bg-white xl:shadow-2xl xl:w-[70%]">
                 <img
                     src={loaderData.user.image}
                     alt="user"
-                    className="rounded-sm"
+                    className="rounded-sm xl:w-[40%]"
                 />
+                <div className="mt-5 xl:ml-5">
                 <h2 className="mt-3 font-medium text-2xl">
                     {loaderData.user.firstname} {loaderData.user.lastname}
                 </h2>
@@ -46,9 +47,11 @@ return (
                     </span>
                 ))}</p>
                 <p className="text-gray-500">Address: {loaderData.user.address}</p>
-                
+              
+
                 <div className="mt-5">
                     <Link to="/update-profile" className="bg-black p-2 rounded text-white">Edit profile</Link>
+                </div>
                 </div>
             </div>
         </div>
