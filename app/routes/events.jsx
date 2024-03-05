@@ -1,13 +1,21 @@
 import EventCard from "../components/EventCard";
+import mongoose from "mongoose";
 
 
 
 
 export const meta = () => {
-    return [{ title: "Remix Post App" }];
+    return [{ title: "GetFit app" }];
   };
 
-  
+
+export async function loader() {
+ 
+
+  }
+
+
+
 export default function Events() {
     return (
         <div>
