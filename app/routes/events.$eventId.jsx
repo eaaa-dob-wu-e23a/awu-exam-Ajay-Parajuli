@@ -35,7 +35,7 @@ export default function Event() {
 
     return(
       <>
-      <div className="shadow-xl m-auto mb-10 xl:pt-10 xl:w-[50%]">
+      <div className="shadow-xl m-auto mb-10 xl:w-[50%]">
 
 
         <div className="relative w-full">
@@ -44,6 +44,8 @@ export default function Event() {
           </div>
 <div className="lg:flex lg:flex-row-reverse lg:justify-between">
           <div>
+          <h3 className="mb-1 font-medium text-lg">About me</h3>
+
           <div className="flex p-2">
         <img className="rounded-full w-[50px] h-[50px] object-cover" src={event.created_by.image} alt={event.created_by.firstname} />
         <span className="ml-2">
@@ -52,7 +54,6 @@ export default function Event() {
         </span>
       </div>
       <div className="p-2 leading-7">
-        <h3 className="mb-1 font-medium text-lg">About me</h3>
         <p className="text-gray-500">Languages: {event.created_by.languages.map((language, index) => (
             <span key={language}>
                 {language}{index !== event.created_by.languages.length - 1 ? ', ' : ''}
@@ -98,7 +99,7 @@ export default function Event() {
 <div className="flex flex-wrap justify-around p-2 w-full text-black">
     {users.map((user) => (
         <div className="" key={user._id}>
-            <img className="rounded-full w-[50px] h-[50px] object-cover" src={user.image} alt={event.created_by.firstname} />
+            <img className="rounded-full w-[50px] h-[50px] object-cover" src={user.image} alt={user.firstname} />
             <p className="text-center">{user.firstname}</p>
         </div>
     ))
@@ -106,6 +107,16 @@ export default function Event() {
 </div>
 
 <div>
+{authUser._id === event.created_by._id && (
+        <div className="btns">
+          <Form action="update">
+            <button>Update</button>
+          </Form>
+          <Form action="destroy" method="post">
+            <button>Delete</button>
+          </Form>
+        </div>
+      )}
   <Form method="post">
   <button className="bg-blue-500 p-2 rounded w-full text-white">Join event</button>
   </Form>
