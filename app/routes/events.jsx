@@ -9,11 +9,6 @@ export const meta = () => {
   };
 
 
-export async function loader() {
- 
-
-  }
-
 
 
 export default function Events() {
