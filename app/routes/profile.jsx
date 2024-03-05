@@ -62,3 +62,12 @@ return (
 );
 }
 
+export async function action({ request }) {
+    const user = await authenticator.isAuthenticated(request);
+    if (user) { // if user is authenticated
+      await authenticator.logout(request, { redirectTo: "/signin" });
+    } else {
+      redirect("/signin");
+    }
+  }
+
