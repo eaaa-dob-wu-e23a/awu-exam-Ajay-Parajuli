@@ -52,7 +52,7 @@ return (
                 <div className="flex justify-between mt-5 w-full">
                     <Link to="/update-profile" className="bg-black p-2 rounded text-white">Edit profile</Link>
                     <Form method="post">
-        <button className="">Logout</button>
+        <button className="bg-red-600 p-2 rounded text-gray-200">Logout</button>
       </Form>
                 </div>
                 </div>
