@@ -14,7 +14,7 @@ const userSchema = new Schema(
         },
         message: "Invalid image URL"
       }
-    }, // Close the 'image' property
+    }, 
 
     mail: {
       type: String,

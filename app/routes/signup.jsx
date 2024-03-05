@@ -13,7 +13,7 @@ console.log(actionData);
   return (
     <div className="flex flex-col justify-center items-center w-full xl:h-[100vh]">
             <h1 className="mt-2 font-bold text-3xl">GetFit</h1>
-      <Form className="flex flex-col shadow-2xl p-4 rounded-xl w-[95%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[30%]" id="sign-up-form" method="post">
+      <Form className="flex flex-col shadow-2xl p-4 rounded-xl w-[95%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[35%]" id="sign-up-form" method="post">
         <h2 className="border-gray-300 mb-4 pb-3 border-b-2 font-medium text-xl">Sign Up</h2>
         <div>
         <div className="bg-red-500 mb-3 rounded w-full text-center">
@@ -148,14 +148,15 @@ console.log(actionData);
 
 export async function action({ request }) {
   const formData = await request.formData(); 
-  try {// get the form data
-    const newUser = Object.fromEntries(formData); // convert the form data to an object
-    await mongoose.models.User.create(newUser); // create the user
+  try {
+    const newUser = Object.fromEntries(formData);
+    const languages = newUser.languages.split(",").map(lang => lang.trim()); // extract and process languages
+    newUser.languages = languages; // update languages in newUser object
+    await mongoose.models.User.create(newUser);
 
-    return redirect("/signin"); // redirect to the sign-in page
+    return redirect("/signin");
   } catch (error) {
     console.log(error);
-    return json( { errors: error.errors, values: Object.fromEntries(formData) },
-    { status: 400 },)
+    return json({ errors: error.errors, values: Object.fromEntries(formData) }, { status: 400 });
   }
 }
