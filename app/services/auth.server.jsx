@@ -32,6 +32,20 @@ export let authenticator = new Authenticator(sessionStorage, { //
       let mail = form.get("mail");
       let password = form.get("password");
       const user = await verifyUser({ mail, password });
+
+      if (!mail || mail?.length === 0) {
+        throw new AuthorizationError("Bad Credentials: Email is required");
+      }
+      if (typeof mail !== "string") {
+        throw new AuthorizationError("Bad Credentials: Email must be a string");
+      }
+  
+      if (!password || password?.length === 0) {
+        throw new AuthorizationError("Bad Credentials: Password is required");
+      }
+      if (typeof password !== "string") {
+        throw new AuthorizationError("Bad Credentials: Password must be a string");
+      } 
   
     if (!user) {
       // if problem with user throw error AuthorizationError
