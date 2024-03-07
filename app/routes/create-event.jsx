@@ -14,7 +14,7 @@ export function meta() {
   ];
 }
 
-export async function loader({ request, params }) {
+export async function loader({ request }) {
     return await authenticator.isAuthenticated(request, {
       failureRedirect: "/signin",
     });
@@ -25,6 +25,9 @@ export async function loader({ request, params }) {
 export default function CreateEvent() {
     const actionData = useActionData();
   const navigate = useNavigate();
+  const [image, setImage] = useState(
+    "https://placehold.co/600x400?text=Add+your+amazing+image"
+  );
   const [currentErrorIndex, setCurrentErrorIndex] = useState(0); // State to track the current error index
 
 
@@ -160,7 +163,6 @@ Street
   name="description"
   aria-label="description"
     placeholder="Description of the event.."
-  defaultValue={event.description}
 />
 </div>
 
@@ -172,13 +174,18 @@ Street
                 className="border-2 border-gray-300 p-1 rounded w-full"
                 type="url"
                 placeholder="Paste an image URL..."
+                onChange={(e) => setImage(e.target.value)}
               />
                 <div className="mt-1">
               <label className="" htmlFor="image-preview">Image Preview</label>
               <img
                 id="image-preview"
                 className="rounded w-[350px] object-cover"
-                src="https://placehold.co/600x400?text=Paste+an+image+URL"
+                src={
+                    image
+                      ? image
+                      : "https://placehold.co/600x400?text=Paste+an+image+URL"
+                  }
                 alt="Choose"
                 onError={e => (e.target.src = "https://placehold.co/600x400?text=Error+loading+image")}
               />
@@ -196,13 +203,55 @@ Street
 }
 
 
-export async function action({ request, params }) {
-  const formData = await request.formData();
-  try {
-    return redirect(`/events/${params.eventId}`);
-  } catch (error){
-    console.log(error);
-    return json( { errors: error.errors, values: Object.fromEntries(formData) },
-    { status: 400 },)
-  }
+export async function action({ request }) {
+    // Get the authenticated user
+    const user = await authenticator.isAuthenticated(request, {
+      failureRedirect: "/signin",
+    });
+
+    // Extract form data from the request
+    const formData = await request.formData();
+
+    // Extract individual form fields
+    const {
+        title,
+        description,
+        date,
+        maxParticipants,
+        city,
+        street,
+        housenumber,
+        image // Ensure you have an 'image' field in your form
+    } = Object.fromEntries(formData);
+
+    // Create a new event object
+    const newEvent = {
+        title,
+        description,
+        date, // Convert date string to Date object
+        maxParticipants,// Parse maxParticipants to integer
+        address: {
+            city,
+            street,
+            houseNumber: housenumber
+        },
+        image // Image URL
+    };
+
+    // Add the authenticated user's id to the event
+    newEvent.created_by = user._id;
+
+    try {
+        // Save the event to the database
+        await mongoose.models.Event.create(newEvent);
+
+        // Redirect to the appropriate page after event creation
+        return redirect("/events");
+    } catch (error)  {
+        console.log(error);
+        return json( { errors: error.errors, values: Object.fromEntries(formData) },
+        { status: 400 },)
+      }
 }
+
+  

@@ -120,7 +120,6 @@ const eventSchema = new Schema(
   {
     title: {
       type: String,
-      required: true,
       validate: {
         validator: function (value) {
           // Add your validation logic for title here
@@ -134,29 +133,27 @@ const eventSchema = new Schema(
 
     image: {
       type: String,
-      required: true,
       validate: {
         validator: function (value) {
           // Regular expression to validate URL format
-          return /^(http|https):\/\/[^\s$.?#].[^\s]*$/.test(value);
+          return value.length === 0 || /^(http|https):\/\/[^\s$.?#].[^\s]*$/.test(value);
         },
         message: "Invalid image URL"
       }
     }, 
     description: {
       type: String,
-      validate: {
+      validate: { 
         validator: function (value) {
           // Add your validation logic for description here
-          return value && value.length <= 300; // ensuring it's less than or equal to 100 characters
+          return value.length === 0 || value.length <= 300; // 
         },
-        message: "Description must be less or equal to 100 characters"
-      }
+        message: "Description is required and must be less than or equal to 500 characters"
+      }// Validate the description field
     },
 
     date: {
       type: Date,
-      required: true,
       validate: {
         validator: function (value) {
           // Check if the provided date is greater than the current date
@@ -175,7 +172,6 @@ const eventSchema = new Schema(
     }], 
     maxParticipants: {
       type: Number,
-      required: true, // Ensure event maxParticipants are required
       validate: {
         validator: function (value) {
           // Check if the provided maxParticipants is greater than 0 and less than 20
@@ -188,7 +184,6 @@ const eventSchema = new Schema(
     address: {
       city: {
         type: String,
-        required: true,
         validate : {
           validator: function (value) {
             // Add your validation logic for city here
@@ -199,7 +194,6 @@ const eventSchema = new Schema(
       },
       street: {
         type: String,
-        required: true,
         validate : {
           validator: function (value) {
             return value.length > 0; // For example, ensuring it's not empty
