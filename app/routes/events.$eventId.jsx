@@ -52,7 +52,7 @@ export default function Event() {
         </div>
         <div className="lg:flex lg:flex-row-reverse lg:justify-between">
           <div>
-            <h3 className="mb-1 font-medium text-lg">About me</h3>
+            <h3 className="mb-1 p-2 font-medium text-lg">About me</h3>
             <div className="flex p-2">
               <img className="rounded-full w-[50px] h-[50px] object-cover" src={event.created_by.image} alt={event.created_by.firstname} />
               <span className="ml-2">
