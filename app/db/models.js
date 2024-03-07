@@ -178,10 +178,10 @@ const eventSchema = new Schema(
       required: true, // Ensure event maxParticipants are required
       validate: {
         validator: function (value) {
-          // Check if the provided maxParticipants is greater than 0
-          return value > 0;
+          // Check if the provided maxParticipants is greater than 0 and less than 20
+            return value > 0 && value < 21;
         },
-        message: "Max participants must be greater than 0"
+        message: "Max participants must be greater than 0 and less than 21"
       }
     },
     
