@@ -92,6 +92,7 @@ className="border-2 border-gray-300 p-1 rounded w-full"
   id="MaxParticipants"
   type="number"
   name="maxParticipants"
+  max={10}
   defaultValue={event.maxParticipants}
   aria-label="maxParticipants"
   autoComplete="off"
