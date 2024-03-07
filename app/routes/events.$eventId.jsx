@@ -47,8 +47,8 @@ export default function Event() {
     <>
       <div className="shadow-xl m-auto mb-10 xl:w-[50%]">
         <div className="relative w-full">
-          <img className="rounded w-full lg:h-[400px] object-cover" src={event.image} alt={event.description} />
-          <h1 className="top-1/2 left-1/2 absolute bg-white bg-opacity-75 rounded w-[90%] font-medium text-center text-lg transform -translate-x-1/2 -translate-y-1/2">{event.description}</h1>
+          <img className="rounded w-full lg:h-[400px] object-cover" src={event.image} alt={event.title} />
+          <h1 className="top-1/2 left-1/2 absolute bg-white bg-opacity-75 rounded w-[90%] font-medium text-center text-lg transform -translate-x-1/2 -translate-y-1/2">{event.title}</h1>
         </div>
         <div className="lg:flex lg:flex-row-reverse lg:justify-between">
           <div>
@@ -78,20 +78,19 @@ export default function Event() {
             <div className="p-2 leading-7">
               <h3 className="mb-1 font-medium text-lg">About the Event</h3>
               <p className="text-gray-500">Event date: {formatDate(event.date)}</p>
-              <p className="text-gray-500">Event address: {event.address}</p>
+              <p className="text-gray-500">Event address: {event.address.city}, {event.address.street} {event.address.houseNumber}</p>
               <p className="text-gray-500">Available slots: {event.maxParticipants}</p>
-              <p className="text-gray-500">Event organizer: {event.organizer}</p>
             </div>
             <div className="pl-2">
               <h3 className="font-medium">Description:</h3>
-              <p className="text-gray-500">{event.created_by.about}</p>
+              <p className="text-gray-500">{event.description}</p>
             </div>
           </div>
         </div>
         <h3 className="mb-1 p-2 font-medium text-lg">People who are going</h3>
-        <div className="flex flex-wrap justify-around p-2 w-full text-black">
+        <div className="flex p-2 w-full text-black">
           {users.map((user) => (
-            <div className="" key={user._id}>
+            <div className="mr-4" key={user._id}>
               <img className="rounded-full w-[50px] h-[50px] object-cover" src={user.image} alt={user.firstname} />
               <p className="text-center">{user.firstname}</p>
             </div>

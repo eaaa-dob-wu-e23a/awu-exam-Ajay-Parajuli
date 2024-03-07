@@ -81,14 +81,14 @@ Lastname
 
 
 <div className="flex flex-col mb-4">
-<label className="font-medium text-slate-700 text-sm" htmlFor="address">Address</label>
+<label className="font-medium text-slate-700 text-sm" htmlFor="address">Age</label>
 <input
 className="border-2 border-gray-300 p-1 rounded w-full"
-  id="address"
-  type="text"
-  name="address"
-  aria-label="address"
-    defaultValue={user.address}
+  id="age"
+  type="number"
+  name="age"
+  aria-label="age"
+    defaultValue={user.age}
   placeholder="City, Country..."
   autoComplete="off"
 />

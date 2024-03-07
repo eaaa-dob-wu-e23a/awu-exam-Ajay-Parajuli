@@ -10,7 +10,8 @@ export default function EventCard({ post }) {
     <div className="bottom-0 left-0 absolute bg-white bg-opacity-75 p-2 w-[80%] rounded">
       <h3 className="font-medium">{post.description}</h3>
       <p>Available slots: {post.maxParticipants}</p>
-      <p>Event at: {post.address}</p>
+      <p>Event at: {post.address.city}, {post.address.street} {post.address.houseNumber} </p>
+
     </div>
   </div>
 </article>

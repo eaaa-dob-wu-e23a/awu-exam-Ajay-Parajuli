@@ -50,7 +50,6 @@ export async function loader({ request }) {
                                 {language}{index !== user.languages.length - 1 ? ', ' : ''}
                             </span>
                         ))}</p>
-                        <p className="text-gray-500">Address: {user.address}</p>
                         </div>
 
                         <div className="flex justify-between mt-5 w-full">
