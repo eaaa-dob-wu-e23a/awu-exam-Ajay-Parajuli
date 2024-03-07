@@ -159,14 +159,7 @@ Street
 />
   
 </div>
-
-
 </div>
-
-
-
-
-
 
 <div className="w-full mb-4">
 <label htmlFor="description">Description</label>
@@ -211,4 +204,46 @@ Street
 </Form>
 </div>
 );
+}
+
+
+export async function action({ request, params }) {
+  const formData = await request.formData();
+  try {
+    // Protect the route
+    const authUser = await authenticator.isAuthenticated(request, {
+      failureRedirect: "/signin",
+    });
+
+    // Fetch the post to check if the current user is the creator
+    const eventToUpdate = await mongoose.models.Event.findById(params.eventId);
+
+    if (eventToUpdate.created_by.toString() !== authUser._id.toString()) {
+      // User is not the creator of the event, redirect
+      return redirect(`/events/${params.eventId}`);
+    }
+
+    // User is authenticated and is the creator, proceed to update the post
+  
+    const event = Object.fromEntries(formData); // 
+
+    // Since postToUpdate is already the document you want to update,
+    // you can directly modify and save it, which can be more efficient than findByIdAndUpdate
+    eventToUpdate.title = event.title;
+    eventToUpdate.image = event.image;
+    eventToUpdate.date = event.date;
+    eventToUpdate.maxParticipants = event.maxParticipants;
+    eventToUpdate.address.city = event.city;
+    eventToUpdate.address.street = event.street;
+    eventToUpdate.address.houseNumber = event.housenumber;
+    eventToUpdate.description = event.description;
+
+    await eventToUpdate.save();
+
+    return redirect(`/events/${params.eventId}`);
+  } catch (error){
+    console.log(error);
+    return json( { errors: error.errors, values: Object.fromEntries(formData) },
+    { status: 400 },)
+  }
 }
