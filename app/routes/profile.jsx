@@ -1,7 +1,7 @@
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import { authenticator } from "../services/auth.server";
 import { useState } from "react";
-
+import {  format } from 'date-fns';
 import mongoose from "mongoose";
 import { redirect } from "@remix-run/node";
 
@@ -16,20 +16,25 @@ export async function loader({ request }) {
       failureRedirect: "/signin"
     });
     const updatedUser = await mongoose.models.User.findById(user._id);
-    return { user: updatedUser };
+    const myevents = await mongoose.models.Event.find({
+        participants: { $in: [user._id] }
+    });
+
+    console.log(myevents);
+  
+    return { user: updatedUser, myevents };
   }
 
 
 
 
   export default function Profile() {
-    const {user} = useLoaderData(); // Using useLoaderData hook to access loader data
-    console.log(user);
+    const {user, myevents} = useLoaderData(); // Using useLoaderData hook to access loader data
     const [image, setImage] = useState(user.image);
 
     return (
         <>
-            <div className="xl:flex xl:flex-col xl:justify-center xl:items-center shadow-2xl xl:shadow-none p-5 xl:w-full xl:h-[80vh]">
+            <div className="xl:flex xl:flex-col xl:justify-center shadow-2xl xl:items-center xl:shadow-none p-5 xl:w-full xl:h-[90vh]">
                 <h1 className="p-3 font-medium text- text-2xl">Profile</h1>
                 <div className="flex xl:flex-row flex-col bg-white xl:shadow-2xl xl:w-[70%]">
                     <img
@@ -58,6 +63,21 @@ export async function loader({ request }) {
                                 <button className="bg-red-600 p-2 rounded text-gray-200">Logout</button>
                             </Form>
                         </div>
+                    </div>
+                </div>
+                <div className="xl:w-[70%]">
+                    <h2 className="mt-5 font-medium text-2xl">Registered events</h2>
+                    <div className="flex flex-col justify-start">
+                        {myevents.map((event) => (
+                            <div key={event._id} className="flex justify-between items-center p-2 border-b-2">
+                                <div>
+                                    <h3 className="font-medium text-xl">{event.title}</h3>
+                                    <p>{event.description}</p>
+                                    <p>Date: {format(new Date(event.date), "yyyy-MM-dd")}</p>
+                                </div>
+                                <Link to={`/events/${event._id}`} className="bg-black p-2 rounded text-white">View</Link>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
