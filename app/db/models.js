@@ -73,6 +73,17 @@ const userSchema = new Schema(
       }
     },
 
+    about: {
+      type: String,
+      validate: { 
+        validator: function (value) {
+          // Add your validation logic for description here
+          return value.length === 0 || value.length <= 300; // 
+        },
+        message: "About can either be empty or less than or equal to 500 characters"
+      }
+    },
+
     languages: {
       type: [String],
       validate: {
@@ -148,8 +159,8 @@ const eventSchema = new Schema(
           // Add your validation logic for description here
           return value.length === 0 || value.length <= 300; // 
         },
-        message: "Description is required and must be less than or equal to 500 characters"
-      }// Validate the description field
+        message: "Description can either be empty or less than or equal to 500 characters"
+      }
     },
 
     date: {
@@ -175,9 +186,9 @@ const eventSchema = new Schema(
       validate: {
         validator: function (value) {
           // Check if the provided maxParticipants is greater than 0 and less than 20
-            return value > 0 && value < 21;
+            return value > 0 && value < 26;
         },
-        message: "Max participants must be greater than 0 and less than 21"
+        message: "Max participants must be greater than 0 and less than 26"
       }
     },
     
