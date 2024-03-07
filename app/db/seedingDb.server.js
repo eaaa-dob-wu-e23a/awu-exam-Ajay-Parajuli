@@ -79,8 +79,8 @@ async function insertData(User, Event) {
       image: "https://picsum.photos/800/600",
       description: "A fun picnic in the park.",
       date: new Date("2024-03-10"),
-      created_by: Dan._id,
-      participants: [Dan._id, Kasper._id],
+      created_by: John._id,
+      participants: [John._id, Kasper._id],
       maxParticipants: 50,
       address: "Central Park, New York"
     },

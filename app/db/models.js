@@ -54,7 +54,7 @@ const userSchema = new Schema(
     },
 
     age: {
-      type: Number,// Ensure user ages are required
+      type: Number, 
     },
 
     gender: String,
@@ -99,9 +99,6 @@ const userSchema = new Schema(
         message: 'Languages must be comma separated list - Fx "english, spanish, french"'
       }
     },
-
-
-    address: String,
   },
   { timestamps: true } // Automatically include createdAt and updatedAt fields
 );
@@ -121,6 +118,20 @@ userSchema.pre("save", async function (next) {
 
 const eventSchema = new Schema(
   {
+    title: {
+      type: String,
+      required: true,
+      validate: {
+        validator: function (value) {
+          // Add your validation logic for title here
+          return value.length > 0 && value.length <= 50; // Ensuring it's not empty and has a length less than or equal to 10 characters
+        },
+        message: "Title is required and must be less than or equal to 50 characters"
+      }
+    },
+
+
+
     image: {
       type: String,
       required: true,
@@ -132,7 +143,17 @@ const eventSchema = new Schema(
         message: "Invalid image URL"
       }
     }, 
-    description: String,
+    description: {
+      type: String,
+      validate: {
+        validator: function (value) {
+          // Add your validation logic for description here
+          return value && value.length <= 300; // ensuring it's less than or equal to 100 characters
+        },
+        message: "Description must be less or equal to 100 characters"
+      }
+    },
+
     date: {
       type: Date,
       required: true,
@@ -151,20 +172,48 @@ const eventSchema = new Schema(
     participants: [{
       type: Schema.Types.ObjectId,
       ref: 'User'
-  }], 
+    }], 
     maxParticipants: {
       type: Number,
       required: true, // Ensure event maxParticipants are required
+      validate: {
+        validator: function (value) {
+          // Check if the provided maxParticipants is greater than 0
+          return value > 0;
+        },
+        message: "Max participants must be greater than 0"
+      }
     },
+    
     address: {
-      type: String,
-      required: true, // Ensure event addresses are required
-    },
-    organizer: String,   
+      city: {
+        type: String,
+        required: true,
+        validate : {
+          validator: function (value) {
+            // Add your validation logic for city here
+            return value.length > 0; // For example, ensuring it's not empty
+          },
+          message: "City is required"
+        }
+      },
+      street: {
+        type: String,
+        required: true,
+        validate : {
+          validator: function (value) {
+            return value.length > 0; // For example, ensuring it's not empty
+          },
+          message: "Street is required"
+        }
+      },
+      houseNumber: {
+        type: String,
+      }
+    },   
   },
   { timestamps: true }  // Automatically include createdAt and updatedAt fields
- );
-
+);
 
 
 
