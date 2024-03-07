@@ -39,8 +39,7 @@ export default function UpdateEvent() {
     
 
 return(
-    <div className=" flex flex-col justify-center items-center w-full md:h-[95vh] xl:h-[85vh]">
-    <h1 className="mt-2 font-bold text-3xl">GetFit</h1>
+    <div className=" flex flex-col justify-center items-center w-full md:h-[90vh] xl:h-[100vh] relative">
 <Form className="flex flex-col shadow-2xl p-4 rounded-xl w-[95%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[50%]" id="sign-up-form" method="post">
 <h2 className="border-gray-300 mb-4 pb-3 border-b-2 font-medium text-xl">Update Event</h2>
 <div>
@@ -53,14 +52,18 @@ return(
         </div>
 </div>
 <div className="flex flex-col mb-4">
-<label className="font-medium text-slate-700 text-sm" htmlFor="address">Title</label>
+<label className="font-medium text-slate-700 text-sm" htmlFor="title">
+<span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
+Title
+</span>
+</label>
 <input
 className="border-2 border-gray-300 p-1 rounded w-full"
   id="title"
   type="text"
   name="title"
   aria-label="title"
-    defaultValue={event.created_by.title}
+    defaultValue={event.title}
   placeholder=""
   autoComplete="off"
 />
@@ -70,7 +73,9 @@ className="border-2 border-gray-300 p-1 rounded w-full"
 
 <div className="flex flex-col mb-4">
 
-<label className="font-medium text-slate-700 text-sm" htmlFor="languages">Event Date</label>
+<label className="font-medium text-slate-700 text-sm" htmlFor="Date"> <span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
+Date
+</span></label>
 <input
 className="border-2 border-gray-300 p-1 rounded w-full"
   id="date"
@@ -86,7 +91,9 @@ className="border-2 border-gray-300 p-1 rounded w-full"
 
 <div className="flex flex-col mb-4">
 
-<label className="font-medium text-slate-700 text-sm" htmlFor="languages">MaxParticipants</label>
+<label className="font-medium text-slate-700 text-sm" htmlFor="maxparticipants"> <span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
+Nr. of Participants
+</span></label>
 <input
 className="border-2 border-gray-300 p-1 rounded w-full"
   id="MaxParticipants"
@@ -100,45 +107,53 @@ className="border-2 border-gray-300 p-1 rounded w-full"
 
 </div>
 
-<label htmlFor="firstname"><span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
-Address
-</span></label>
+
 
 <div className="flex justify-between mb-4 w-full">
 <div className="w-[90%]">
 
+<label htmlFor="housenr"><span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
+City
+</span></label>
 <input className="border-2 border-gray-300 p-1 rounded w-[90%]"
   id="city"
   type="text"
   name="city"
   aria-label="city"
-  defaultValue={""}
+  defaultValue={event.address.city}
   placeholder="City..."
   autoComplete="off"
 />
 </div>
-<div className="w-[90%] flex justify-center">
+<div className="w-[90%] flex justify-center flex-col">
+
+<label htmlFor="housenr">
+    <span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
+Street
+</span></label>
 
 <input className="border-2 border-gray-300 p-1 rounded w-[90%]"
   id="street"
   type="text"
   name="street"
   aria-label="street"
-    defaultValue={""}
+    defaultValue={event.address.street}
   placeholder="street"
   autoComplete="off"
 />
   
 </div>
 
-<div className="w-[90%] flex justify-end">
+<div className="w-[90%] flex justify-end flex-col">
+
+<label className="text-slate-700 text-sm font-medium" htmlFor="housenr">Housenr.</label>
 
 <input className="border-2 border-gray-300 p-1 rounded w-[90%]"
   id="housenumber"
   type="text"
   name="housenumber"
   aria-label="housenumber"
-    defaultValue={""}
+    defaultValue={event.address.houseNumber}
   placeholder="housenumber..."
   autoComplete="off"
 />
@@ -154,9 +169,7 @@ Address
 
 
 <div className="w-full mb-4">
-<label htmlFor="description"><span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
-Description
-</span></label>
+<label htmlFor="description">Description</label>
 <textarea className="border-2 border-gray-300 p-1 rounded w-full h-[100px] resize-none "
   id="description"
   type="text"
