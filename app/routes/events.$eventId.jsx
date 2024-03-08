@@ -20,7 +20,10 @@ export async function loader({ request, params }) {
 
     const users = await mongoose.models.User.find({ _id: { $in: event.participants } });
 
-    return json({ event, authUser, users });
+    const comments = await mongoose.models.Comment.find({ event_id: event._id }).populate("user_id");// Load the comments for the event
+    console.log(comments);
+
+    return json({ event, authUser, users, comments });
   } catch (error) {
     if (error instanceof mongoose.CastError) {
       // Handle CastError here
@@ -51,7 +54,7 @@ export function ErrorBoundary() {
 
 export default function Event() {
   const Fetcher = useFetcher();
-  const { event, authUser, users } = useLoaderData();
+  const { event, authUser, users, comments } = useLoaderData();
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -144,7 +147,37 @@ export default function Event() {
             </Fetcher.Form>
           )}
         </div>
+        <div className="mb-5">
+        <h3 className="p-2 font-medium text-lg">Comments</h3>
+        <Form method="post">
+          <textarea className="w-full p-2 border rounded " name="comment" placeholder="Write a comment"></textarea>
+          <button className="bg-[#333] p-2 rounded w-full text-white" type="submit">Submit Comment</button>
+        </Form>
+        <div className="pt-5 pb-5">
+  {comments.length === 0 ? (
+    <p className="text-black pl-2">No comments yet. Be the first one to comment.</p>
+  ) : (
+    comments.map((comment) => (
+      <div key={comment._id} className="flex p-2">
+        <img
+          className="rounded-full w-[50px] h-[50px] object-cover"
+          src={comment.user_id.image}
+          alt={comment.user_id.firstname}
+        />
+        <div className="ml-2">
+          <h3 className="font-medium">
+            {comment.user_id.firstname} {comment.user_id.lastname}
+          </h3>
+          <p>{comment.comment}</p>
+        </div>
       </div>
+    ))
+  )}
+</div>
+
+      </div>
+      </div>
+    
     </>
   );
 }

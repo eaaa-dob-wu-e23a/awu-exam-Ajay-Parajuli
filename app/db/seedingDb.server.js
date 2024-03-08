@@ -3,17 +3,20 @@ import mongoose from "mongoose";
 export default async function seedDb() {
   const User = mongoose.model("User");
   const Event = mongoose.model("Event");
+  const Comment = mongoose.model("Comment");
+
 
   const userCount = await User.countDocuments();
   const eventCount = await Event.countDocuments();
+  const commentCount = await Comment.countDocuments();
 
-  if (userCount === 0 || eventCount === 0) {
+  if (userCount === 0 || eventCount === 0 || commentCount === 0) {
     console.log("Seeding database...");
-    insertData(User, Event);
+    insertData(User, Event, Comment);
   }
 }
 
-async function insertData(User, Event) {
+async function insertData(User, Event, Comment) {
   const Dan = await User.create({
     image: "https://www.eaaa.dk/media/bdojel41/dan-okkels-brendstrup.jpg?anchor=center&mode=crop&width=800&height=450&rnd=132792921559630000&format=webp",
     mail: "user50@example.com",
@@ -125,7 +128,7 @@ async function insertData(User, Event) {
   });
 
   const events = await Event.insertMany([
-    {
+ {
       image: "https://picsum.photos/800/600",
       description: "A fun picnic in the park.",
       title: "Picnic in the Park",
@@ -268,7 +271,13 @@ async function insertData(User, Event) {
     }
   ]);
 
-
+  const comments = await Comment.insertMany([
+    {
+      event_id: events[0]._id,
+    user_id: Dan._id,
+    comment: "This looks like a great event!"
+    },
+  ]);
 
   console.log("Database seeded successfully with users and events:", events);
 }
