@@ -1,9 +1,10 @@
 import { json, redirect } from "@remix-run/node";
-import { Form, useLoaderData, useNavigate, useActionData } from "@remix-run/react";
+import { Form, useLoaderData, useNavigate, useActionData, useRouteError, isRouteErrorResponse  } from "@remix-run/react";
 import mongoose from "mongoose";
 import { useState } from "react";
 import { authenticator } from "../services/auth.server";
 import {  format } from 'date-fns';
+import ErrorMessage from "~/components/ErrorMessage";
 
 
 export function meta() {
@@ -15,13 +16,45 @@ export function meta() {
 }
 
 export async function loader({ request, params }) {
-    await authenticator.isAuthenticated(request, {
-      failureRedirect: "/signin",
-    });
-  // Get the event data from the database
-    const event = await mongoose.models.Event.findById(params.eventId);
-    return json({ event });
+  await authenticator.isAuthenticated(request, {
+    failureRedirect: "/signin",
+  });
 
+  try {
+    // Get the event data from the database
+    const event = await mongoose.models.Event.findById(params.eventId);
+
+    if (!event) {
+      throw new Error("Event not found with given Id");
+    }
+
+    return json({ event });
+  } catch (error) {
+    if (error instanceof mongoose.CastError) {
+      throw new Error("Invalid event Id");
+    } else {
+      throw new Error("An error occurred while fetching the event");
+    }
+  }
+}
+
+
+
+  export function ErrorBoundary() {
+    const error = useRouteError();
+  
+    if (isRouteErrorResponse(error)) {
+      return (
+        <ErrorMessage
+          title={error.status + " " + error.statusText}
+          message={error.data}
+        />
+      );
+    } else if (error instanceof Error) {
+      return <ErrorMessage title={error.message} />;
+    } else {
+      return <ErrorMessage title="Unknown Error" />;
+    }
   }
 
 

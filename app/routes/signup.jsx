@@ -94,14 +94,14 @@ console.log(actionData);
       
 
 <div className="flex flex-col mb-4">
-        <label className="font-medium text-slate-700 text-sm" htmlFor="address">Address</label>
+        <label className="font-medium text-slate-700 text-sm" htmlFor="age">Age</label>
         <input
         className="border-2 border-gray-300 p-1 rounded w-full"
           id="address"
-          type="text"
-          name="address"
-          aria-label="address"
-          placeholder="City, Country..."
+          type="number"
+          name="age"
+          aria-label="age"
+          placeholder=""
           autoComplete="off"
         />
 
