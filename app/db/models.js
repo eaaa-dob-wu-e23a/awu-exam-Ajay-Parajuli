@@ -237,9 +237,9 @@ const commentSchema = new Schema(
       validate: {
         validator: function (value) {
           // Add your validation logic for comment here
-          return value.length >= 30 && value.length <= 300; // Ensuring it's between 30 and 300 characters
+          return value.length >= 10 && value.length <= 300; // Ensuring it's between 30 and 300 characters
         },
-        message: "Comment must be between 30 and 300 characters"
+        message: "Comment must be between 10 and 300 characters"
       }
     }
   },

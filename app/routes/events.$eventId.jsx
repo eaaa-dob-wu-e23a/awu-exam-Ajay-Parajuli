@@ -73,6 +73,8 @@ export default function Event() {
     }
   }
 
+
+
   return (
     <>
       <div className="shadow-xl m-auto xl:w-[50%]">
@@ -140,16 +142,21 @@ export default function Event() {
           {/* Render the join event button only if the authUser._id is not the same */}
     
           {event.maxParticipants === 0 ? (
-            <p className="bg-black p-2 rounded w-full text-white">Event full booked</p>
-          ) : (
-            <Fetcher.Form method="post" action="join">
-              {event.participants.includes(authUser._id) ? (
-                <button className="bg-red-500 p-2 rounded w-full text-white" type="submit">Leave event</button>
-              ) : (
-                <button className="bg-blue-500 p-2 rounded w-full text-white" type="submit">Join event</button>
-              )}
-            </Fetcher.Form>
-          )}
+  <p className="bg-black p-2 rounded w-full text-white">Event fully booked</p>
+) : (
+  <Fetcher.Form method="post" action="join">
+    {event.participants.includes(authUser._id) ? (
+      <button className="bg-red-500 p-2 rounded w-full text-white transition-all duration-200 ease-in-out" type="submit" disabled={Fetcher.state === "submitting"}>
+        {Fetcher.state === "submitting" ? "Saving..." : "Leave"}
+      </button>
+    ) : (
+      <button className="bg-blue-500 p-2 rounded w-full text-white transition-all duration-200 ease-in-out" type="submit" disabled={Fetcher.state === "submitting"}>
+        {Fetcher.state === "submitting" ? "Saving..." : "Join"}
+      </button>
+    )}
+  </Fetcher.Form>
+)}
+
         </div>
         <div className="mb-5">
         <h3 className="p-2 font-medium text-lg">Comments</h3>
@@ -160,7 +167,7 @@ export default function Event() {
             </p>
           )}
         </div>
-        <Form method="post" value="submitComment">
+        <Form method="post">
           <textarea className="w-full p-2 border rounded " name="comment" placeholder="Write a comment"></textarea>
           <button className="bg-[#333] p-2 rounded w-full text-white" type="submit">Submit Comment</button>
         </Form>
@@ -196,7 +203,9 @@ export default function Event() {
 
 export async function action({ request, params }) {
   const formData = await request.formData();  
+
   try {
+ 
     // Protect the route
     const authUser = await authenticator.isAuthenticated(request, {
       failureRedirect: "/signin",
@@ -204,6 +213,8 @@ export async function action({ request, params }) {
 
     const user = await mongoose.models.User.findById(authUser._id);
     const event = await mongoose.models.Event.findById(params.eventId);
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     if (!event) {
       throw new Error('Event not found');
