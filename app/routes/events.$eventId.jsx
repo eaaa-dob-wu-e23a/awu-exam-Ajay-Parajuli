@@ -1,7 +1,8 @@
 import { authenticator } from "../services/auth.server";
 import mongoose from "mongoose";
 import { json, redirect } from "@remix-run/node";
-import { Form, useLoaderData, useFetcher } from "@remix-run/react";
+import { Form, useLoaderData, useFetcher, useRouteError, isRouteErrorResponse } from "@remix-run/react";
+import ErrorMessage from "~/components/ErrorMessage";
 
 
 export const meta = () => {
@@ -21,8 +22,30 @@ export async function loader({ request, params }) {
 
     return json({ event, authUser, users });
   } catch (error) {
-    console.log(error);
-    throw error; // Rethrow the error to be handled by Remix or other error handling middleware
+    if (error.name === 'CastError') {
+      // Handle CastError here
+      throw new Error("Event not found with given Id"); // Throw a new error to be handled by the ErrorBoundary
+    } else {
+      // Handle other errors
+      throw new Error('An unexpected error occurred');
+    }
+  }
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <ErrorMessage
+        title={error.status + " " + error.statusText}
+        message={error.data}
+      />
+    );
+  } else if (error instanceof Error) {
+    return <ErrorMessage title={error.message} />;
+  } else {
+    return <ErrorMessage title="Unknown Error" />;
   }
 }
 

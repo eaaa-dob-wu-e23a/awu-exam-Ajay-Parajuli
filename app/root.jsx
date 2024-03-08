@@ -51,7 +51,7 @@ export function ErrorBoundary() {
       </html>
     );
   } else if (error instanceof Error) {
-    return <ErrorMessage title={error.message} message={error.stack} />;
+    return <ErrorMessage title={error.message} />;
   } else {
     return <ErrorMessage title="Unknown Error" />;
   }
