@@ -45,7 +45,7 @@ export default function Event() {
 
   return (
     <>
-      <div className="shadow-xl m-auto mb-10 xl:w-[50%]">
+      <div className="shadow-xl m-auto xl:w-[50%]">
         <div className="relative w-full">
           <img className="rounded w-full lg:h-[400px] object-cover" src={event.image} alt={event.title} />
           <h1 className="top-1/2 left-1/2 absolute bg-white bg-opacity-75 rounded w-[90%] font-medium text-center text-lg transform -translate-x-1/2 -translate-y-1/2">{event.title}</h1>
