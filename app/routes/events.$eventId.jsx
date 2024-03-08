@@ -1,7 +1,8 @@
 import { authenticator } from "../services/auth.server";
 import mongoose from "mongoose";
+import { useState } from "react";
 import { json, redirect } from "@remix-run/node";
-import { Form, useLoaderData, useFetcher, useRouteError, isRouteErrorResponse } from "@remix-run/react";
+import { Form, useLoaderData, useFetcher, useRouteError, isRouteErrorResponse, useActionData } from "@remix-run/react";
 import ErrorMessage from "~/components/ErrorMessage";
 
 
@@ -54,7 +55,10 @@ export function ErrorBoundary() {
 
 export default function Event() {
   const Fetcher = useFetcher();
+  const actionData = useActionData();
   const { event, authUser, users, comments } = useLoaderData();
+  const [currentErrorIndex, setCurrentErrorIndex] = useState(0); // State to track the current error index
+
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -149,7 +153,14 @@ export default function Event() {
         </div>
         <div className="mb-5">
         <h3 className="p-2 font-medium text-lg">Comments</h3>
-        <Form method="post">
+        <div className="bg-red-500 mb-3 rounded w-full text-center">
+          {actionData?.errors && Object.keys(actionData.errors).length > 0 && (
+            <p className="p-1 text-white">
+              {Object.values(actionData.errors)[currentErrorIndex].message}
+            </p>
+          )}
+        </div>
+        <Form method="post" value="submitComment">
           <textarea className="w-full p-2 border rounded " name="comment" placeholder="Write a comment"></textarea>
           <button className="bg-[#333] p-2 rounded w-full text-white" type="submit">Submit Comment</button>
         </Form>
@@ -182,7 +193,9 @@ export default function Event() {
   );
 }
 
+
 export async function action({ request, params }) {
+  const formData = await request.formData();  
   try {
     // Protect the route
     const authUser = await authenticator.isAuthenticated(request, {
@@ -195,6 +208,14 @@ export async function action({ request, params }) {
     if (!event) {
       throw new Error('Event not found');
     }
+
+    
+    const comment = Object.fromEntries(formData);
+
+    comment.user_id = user._id;
+    comment.event_id = event._id;
+
+    await mongoose.models.Comment.create(comment);
 
     const participantIndex = event.participants.indexOf(user._id);
     if (participantIndex !== -1) {
@@ -213,7 +234,9 @@ export async function action({ request, params }) {
 
   } catch (error) {
     console.log(error);
-    throw error; // Rethrow the error to be handled by Remix or other error handling middleware
+    return json( { errors: error.errors, values: Object.fromEntries(formData) },
+    { status: 400 },)
   }
 }
+
 
