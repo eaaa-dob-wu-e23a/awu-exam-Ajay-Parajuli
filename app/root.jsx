@@ -30,16 +30,25 @@ export const loader = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request);
   return { user };
 }
-
 export function ErrorBoundary() {
   const error = useRouteError();
 
   if (isRouteErrorResponse(error)) {
     return (
-      <ErrorMessage
-        title={error.status + " " + error.statusText}
-        message={'Upsi! ' + error.data}
-      />
+      <html lang="en">
+        <head>
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          <ErrorMessage
+            title={error.status + " " + error.statusText}
+            message={error.data}
+          />
+          <Scripts />
+          <LiveReload />
+        </body>
+      </html>
     );
   } else if (error instanceof Error) {
     return <ErrorMessage title={error.message} message={error.stack} />;
@@ -47,6 +56,7 @@ export function ErrorBoundary() {
     return <ErrorMessage title="Unknown Error" />;
   }
 }
+
 
 export default function App() {
   const { user } = useLoaderData();
