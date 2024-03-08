@@ -53,7 +53,7 @@ export default function Events() {
       });
     }
     return (
-        <div className="">
+        <div className="relative">
           <h1 className="p-2 font-semibold text-3xl">GetFit Events</h1>
           <div className="mt-4 p-2 lg:p-4">
             <Form className="flex flex-row flex-wrap gap-6 w-full lg:justify-center " onChange={handleSearchFilterAndSort}>

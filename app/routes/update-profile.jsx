@@ -28,7 +28,7 @@ export default function UpdateProfile() {
         navigate(-1);
       }
 return (
-    <div className="flex flex-col justify-center items-center w-full md:h-[95vh] xl:h-[85vh]">
+    <div className="flex flex-col justify-center items-center w-full md:h-[95vh] xl:h-[100vh]">
     <h1 className="mt-2 font-bold text-3xl">GetFit</h1>
 <Form className="flex flex-col shadow-2xl p-4 rounded-xl w-[95%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[50%]" id="sign-up-form" method="post">
 <h2 className="border-gray-300 mb-4 pb-3 border-b-2 font-medium text-xl">Update Profile</h2>
