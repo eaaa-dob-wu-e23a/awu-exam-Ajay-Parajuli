@@ -22,7 +22,7 @@ export async function loader({ request, params }) {
 
     return json({ event, authUser, users });
   } catch (error) {
-    if (error.name === 'CastError') {
+    if (error instanceof mongoose.CastError) {
       // Handle CastError here
       throw new Error("Event not found with given Id"); // Throw a new error to be handled by the ErrorBoundary
     } else {
