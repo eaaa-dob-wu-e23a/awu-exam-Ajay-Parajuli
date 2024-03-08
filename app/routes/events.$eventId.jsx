@@ -142,7 +142,7 @@ export default function Event() {
           {event.maxParticipants === 0 ? (
             <p className="bg-black p-2 rounded w-full text-white">Event full booked</p>
           ) : (
-            <Fetcher.Form method="post">
+            <Fetcher.Form method="post" action="join">
               {event.participants.includes(authUser._id) ? (
                 <button className="bg-red-500 p-2 rounded w-full text-white" type="submit">Leave event</button>
               ) : (
@@ -215,19 +215,7 @@ export async function action({ request, params }) {
     comment.user_id = user._id;
     comment.event_id = event._id;
 
-    await mongoose.models.Comment.create(comment);
-
-    const participantIndex = event.participants.indexOf(user._id);
-    if (participantIndex !== -1) {
-      event.participants.splice(participantIndex, 1); // Remove the user from the participants array
-      event.maxParticipants += 1; // Increase the maxParticipants count
-      await event.save();
-    } else {
-      // Add the user to the participants array
-      event.participants.push(user._id);
-      event.maxParticipants -= 1; // Decrease the maxParticipants count
-      await event.save();
-    }
+    await mongoose.models.Comment.create(comment);    
 
     // Redirect to the event page
     return redirect("#");
