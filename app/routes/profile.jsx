@@ -36,11 +36,11 @@ export async function loader({ request }) {
         <>
             <div className="xl:flex xl:flex-col xl:justify-center shadow-2xl xl:items-center xl:shadow-none p-5 xl:w-full xl:h-[90vh]">
                 <h1 className="p-3 font-medium text- text-2xl">Profile</h1>
-                <div className="flex xl:flex-row flex-col bg-white xl:shadow-2xl xl:w-[70%]">
+                <div className="flex xl:flex-row flex-col bg-white xl:shadow-2xl xl:w-[40%] xl:p-5">
                     <img
                         src={image ? image : "https://placehold.co/600x400?text=Profile+image"}
                         alt="user"
-                        className="rounded-sm xl:w-[40%]"
+                        className="rounded-sm w-full xl:w-[400px] object-cover"
                     />
                     <div className="flex flex-col justify-around mt-2 xl:ml-5">
                         <h2 className="font-medium text-2xl">
@@ -65,9 +65,9 @@ export async function loader({ request }) {
                         </div>
                     </div>
                 </div>
-                <div className="xl:w-[70%]">
+                <div className="xl:w-[40%]">
                     <h2 className="mt-5 font-medium text-2xl">Registered events</h2>
-                    <div className="flex flex-col justify-start">
+                    <div className="flex flex-col justify-start overflow-y-auto">
                         {myevents.map((event) => (
                             <div key={event._id} className="flex justify-between items-center p-2 border-b-2">
                                 <div>

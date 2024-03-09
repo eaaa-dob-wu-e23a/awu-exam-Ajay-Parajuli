@@ -56,10 +56,10 @@ export default function Events() {
         <div className="relative">
           <h1 className="p-2 font-semibold text-3xl">GetFit Events</h1>
           <div className="mt-4 p-2 lg:p-4">
-            <Form className="flex flex-row flex-wrap gap-6 w-full lg:justify-center " onChange={handleSearchFilterAndSort}>
+            <Form className="flex flex-row flex-wrap gap-6 w-full md:justify-center " onChange={handleSearchFilterAndSort}>
               <div className="flex flex-col">
           <label htmlFor="search">
-          Search by name
+          Search by event name
           </label>
           <input className="border p-2 w-[250px] rounded" defaultValue={q}  aria-label="Search by caption"  placeholder="Search" type="search" name="q" />
           </div>
@@ -87,7 +87,7 @@ export default function Events() {
       
           </Form> 
           </div>
-         <section className="flex flex-row flex-wrap gap-6 mt-5 p-2 lg:p-4 w-full lg:justify-center">
+         <section className="flex flex-row flex-wrap gap-6 mt-5 p-2 lg:p-4 w-full md:justify-center">
         
         {events.map(event => (
           <Link key={event._id} className="post-link" to={`${event._id}`}>

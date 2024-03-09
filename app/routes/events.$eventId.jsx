@@ -21,7 +21,7 @@ export async function loader({ request, params }) {
 
     const users = await mongoose.models.User.find({ _id: { $in: event.participants } });
 
-    const comments = await mongoose.models.Comment.find({ event_id: event._id }).populate("user_id");// Load the comments for the event
+    const comments = await mongoose.models.Comment.find({ event_id: event._id }).populate("user_id").sort({ createdAt: -1 });// Load the comments for the event
     console.log(comments);
 
     return json({ event, authUser, users, comments });
@@ -77,15 +77,16 @@ export default function Event() {
 
   return (
     <>
-      <div className="shadow-xl m-auto xl:w-[50%]">
+      <div className="mt-[100px] xl:w-full xl:flex xl:justify-around xl:h-[85vh] xl:items-center">
+        <div className="shadow-xl">
         <div className="relative w-full">
-          <img className="rounded w-full lg:h-[400px] object-cover" src={event.image} alt={event.title} />
+          <img className="rounded w-full lg:w-full lg:h-[300px] object-cover" src={event.image} alt={event.title} />
           <h1 className="top-1/2 left-1/2 absolute bg-white bg-opacity-75 rounded w-[90%] font-medium text-center text-lg transform -translate-x-1/2 -translate-y-1/2">{event.title}</h1>
         </div>
         <div className="lg:flex lg:flex-row-reverse lg:justify-between">
           <div>
-            <h3 className="mb-1 p-2 font-medium text-lg">About me</h3>
-            <div className="flex p-2">
+            <h3 className="mb-1 p-2 font-medium text-lg">Event created by</h3>
+            <div className="flex pr-2 pl-2 ">
               <img className="rounded-full w-[50px] h-[50px] object-cover" src={event.created_by.image} alt={event.created_by.firstname} />
               <span className="ml-2">
                 <h3 className="font-medium text-black">{event.created_by.firstname} {event.created_by.lastname}</h3>
@@ -113,14 +114,14 @@ export default function Event() {
               <p className="text-gray-500">Event address: {event.address.city}, {event.address.street} {event.address.houseNumber}</p>
               <p className="text-gray-500">Available slots: {event.maxParticipants}</p>
             </div>
-            <div className="pl-2">
+            <div className="pl-2 xl:w-[400px] pr-2">
               <h3 className="font-medium">Description:</h3>
               <p className="text-gray-500">{event.description}</p>
             </div>
           </div>
         </div>
         <h3 className="mb-1 p-2 font-medium text-lg">People who are going</h3>
-        <div className="flex p-2 w-full text-black">
+        <div className="flex p-2 w-full text-black overflow-x-auto">
           {users.map((user) => (
             <div className="mr-4" key={user._id}>
               <img className="rounded-full w-[50px] h-[50px] object-cover" src={user.image} alt={user.firstname} />
@@ -147,18 +148,19 @@ export default function Event() {
   <Fetcher.Form method="post" action="join">
     {event.participants.includes(authUser._id) ? (
       <button className="bg-red-500 p-2 rounded w-full text-white transition-all duration-1000 ease-in-out hover:bg-red-600 focus:outline-none focus:bg-red-600" type="submit" disabled={Fetcher.state === "submitting"}>
-        {Fetcher.state === "submitting" ? "Saving..." : "Leave"}
+        {Fetcher.state === "submitting" ? "Leaving..." : "Leave"}
       </button>
     ) : (
       <button className="bg-blue-500 p-2 rounded w-full text-white transition-all duration-1000 ease-in-out hover:bg-blue-600 focus:outline-none focus:bg-blue-600" type="submit" disabled={Fetcher.state === "submitting"}>
-        {Fetcher.state === "submitting" ? "Saving..." : "Join"}
+        {Fetcher.state === "submitting" ? "Joining..." : "Join"}
       </button>
     )}
   </Fetcher.Form>
 )}
-
+</div>
 
         </div>
+        <div>
         <div className="mb-5">
         <h3 className="p-2 font-medium text-lg">Comments</h3>
         <div className="bg-red-500 mb-3 rounded w-full text-center">
@@ -172,12 +174,12 @@ export default function Event() {
           <textarea className="w-full p-2 border rounded " name="comment" placeholder="Write a comment"></textarea>
           <button className="bg-[#333] p-2 rounded w-full text-white" type="submit">Submit Comment</button>
         </Form>
-        <div className="pt-5 pb-5">
+        <div className="pt-5 pb-5 h-[500px] overflow-y-auto">
   {comments.length === 0 ? (
     <p className="text-black pl-2">No comments yet. Be the first one to comment.</p>
   ) : (
     comments.map((comment) => (
-      <div key={comment._id} className="flex m-2 p-2 border-b-2">
+      <div key={comment._id} className="flex m-2 p-2 border-b-2 ">
         <img
           className="rounded-full w-[50px] h-[50px] object-cover"
           src={comment.user_id.image}
@@ -193,7 +195,7 @@ export default function Event() {
     ))
   )}
 </div>
-
+</div>
       </div>
       </div>
     

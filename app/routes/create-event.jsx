@@ -38,7 +38,7 @@ export default function CreateEvent() {
 
 return(
     <div className=" flex flex-col justify-center items-center w-full md:h-[90vh] xl:h-[100vh] relative">
-<Form className="flex flex-col shadow-2xl p-4 rounded-xl w-[95%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[50%]" id="sign-up-form" method="post">
+<Form className="flex flex-col shadow-2xl p-4 rounded-xl w-[95%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[50%] xl:h-[80vh] xl:mt-[10px] xl:overflow-y-auto" id="sign-up-form" method="post">
 <h2 className="border-gray-300 mb-4 pb-3 border-b-2 font-medium text-xl">Create Event</h2>
 <div>
 <div className="bg-red-500 mb-3 rounded w-full text-center">
