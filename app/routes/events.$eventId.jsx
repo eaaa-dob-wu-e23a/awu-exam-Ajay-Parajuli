@@ -1,7 +1,8 @@
 import { authenticator } from "../services/auth.server";
 import mongoose from "mongoose";
+import { useState } from "react";
 import { json, redirect } from "@remix-run/node";
-import { Form, useLoaderData, useFetcher, useRouteError, isRouteErrorResponse } from "@remix-run/react";
+import { Form, useLoaderData, useFetcher, useRouteError, isRouteErrorResponse, useActionData } from "@remix-run/react";
 import ErrorMessage from "~/components/ErrorMessage";
 
 
@@ -20,7 +21,10 @@ export async function loader({ request, params }) {
 
     const users = await mongoose.models.User.find({ _id: { $in: event.participants } });
 
-    return json({ event, authUser, users });
+    const comments = await mongoose.models.Comment.find({ event_id: event._id }).populate("user_id");// Load the comments for the event
+    console.log(comments);
+
+    return json({ event, authUser, users, comments });
   } catch (error) {
     if (error instanceof mongoose.CastError) {
       // Handle CastError here
@@ -51,7 +55,10 @@ export function ErrorBoundary() {
 
 export default function Event() {
   const Fetcher = useFetcher();
-  const { event, authUser, users } = useLoaderData();
+  const actionData = useActionData();
+  const { event, authUser, users, comments } = useLoaderData();
+  const [currentErrorIndex, setCurrentErrorIndex] = useState(0); // State to track the current error index
+
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -65,6 +72,8 @@ export default function Event() {
       event.preventDefault();
     }
   }
+
+
 
   return (
     <>
@@ -133,24 +142,71 @@ export default function Event() {
           {/* Render the join event button only if the authUser._id is not the same */}
     
           {event.maxParticipants === 0 ? (
-            <p className="bg-black p-2 rounded w-full text-white">Event full booked</p>
-          ) : (
-            <Fetcher.Form method="post">
-              {event.participants.includes(authUser._id) ? (
-                <button className="bg-red-500 p-2 rounded w-full text-white" type="submit">Leave event</button>
-              ) : (
-                <button className="bg-blue-500 p-2 rounded w-full text-white" type="submit">Join event</button>
-              )}
-            </Fetcher.Form>
+  <p className="bg-black p-2 rounded w-full text-white">Event fully booked</p>
+) : (
+  <Fetcher.Form method="post" action="join">
+    {event.participants.includes(authUser._id) ? (
+      <button className="bg-red-500 p-2 rounded w-full text-white transition-all duration-1000 ease-in-out hover:bg-red-600 focus:outline-none focus:bg-red-600" type="submit" disabled={Fetcher.state === "submitting"}>
+        {Fetcher.state === "submitting" ? "Saving..." : "Leave"}
+      </button>
+    ) : (
+      <button className="bg-blue-500 p-2 rounded w-full text-white transition-all duration-1000 ease-in-out hover:bg-blue-600 focus:outline-none focus:bg-blue-600" type="submit" disabled={Fetcher.state === "submitting"}>
+        {Fetcher.state === "submitting" ? "Saving..." : "Join"}
+      </button>
+    )}
+  </Fetcher.Form>
+)}
+
+
+        </div>
+        <div className="mb-5">
+        <h3 className="p-2 font-medium text-lg">Comments</h3>
+        <div className="bg-red-500 mb-3 rounded w-full text-center">
+          {actionData?.errors && Object.keys(actionData.errors).length > 0 && (
+            <p className="p-1 text-white">
+              {Object.values(actionData.errors)[currentErrorIndex].message}
+            </p>
           )}
         </div>
+        <Form method="post">
+          <textarea className="w-full p-2 border rounded " name="comment" placeholder="Write a comment"></textarea>
+          <button className="bg-[#333] p-2 rounded w-full text-white" type="submit">Submit Comment</button>
+        </Form>
+        <div className="pt-5 pb-5">
+  {comments.length === 0 ? (
+    <p className="text-black pl-2">No comments yet. Be the first one to comment.</p>
+  ) : (
+    comments.map((comment) => (
+      <div key={comment._id} className="flex m-2 p-2 border-b-2">
+        <img
+          className="rounded-full w-[50px] h-[50px] object-cover"
+          src={comment.user_id.image}
+          alt={comment.user_id.firstname}
+        />
+        <div className="ml-2">
+          <h3 className="font-medium">
+            {comment.user_id.firstname} {comment.user_id.lastname}
+          </h3>
+          <p>{comment.comment}</p>
+        </div>
       </div>
+    ))
+  )}
+</div>
+
+      </div>
+      </div>
+    
     </>
   );
 }
 
+
 export async function action({ request, params }) {
+  const formData = await request.formData();  
+
   try {
+ 
     // Protect the route
     const authUser = await authenticator.isAuthenticated(request, {
       failureRedirect: "/signin",
@@ -159,28 +215,29 @@ export async function action({ request, params }) {
     const user = await mongoose.models.User.findById(authUser._id);
     const event = await mongoose.models.Event.findById(params.eventId);
 
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     if (!event) {
       throw new Error('Event not found');
     }
 
-    const participantIndex = event.participants.indexOf(user._id);
-    if (participantIndex !== -1) {
-      event.participants.splice(participantIndex, 1); // Remove the user from the participants array
-      event.maxParticipants += 1; // Increase the maxParticipants count
-      await event.save();
-    } else {
-      // Add the user to the participants array
-      event.participants.push(user._id);
-      event.maxParticipants -= 1; // Decrease the maxParticipants count
-      await event.save();
-    }
+    
+    const comment = Object.fromEntries(formData);
 
-    // Redirect to the event page
-    return redirect("#");
+    comment.user_id = user._id;
+    comment.event_id = event._id;
+
+    await mongoose.models.Comment.create(comment);    
+
+
+    return json({ comment }, { status: 201 });
+
 
   } catch (error) {
     console.log(error);
-    throw error; // Rethrow the error to be handled by Remix or other error handling middleware
+    return json( { errors: error.errors, values: Object.fromEntries(formData) },
+    { status: 400 },)
   }
 }
+
 

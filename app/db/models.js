@@ -220,6 +220,32 @@ const eventSchema = new Schema(
   { timestamps: true }  // Automatically include createdAt and updatedAt fields
 );
 
+const commentSchema = new Schema(
+  {
+    event_id: {
+      type: Schema.Types.ObjectId,
+      ref: 'Event',
+      required: true
+    },
+    user_id: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    comment: {
+      type: String,
+      validate: {
+        validator: function (value) {
+          // Add your validation logic for comment here
+          return value.length >= 10 && value.length <= 300; // Ensuring it's between 30 and 300 characters
+        },
+        message: "Comment must be between 10 and 300 characters"
+      }
+    }
+  },
+  { timestamps: true } // Automatically include createdAt and updatedAt fields
+);
+
 
 
 export const models = [
@@ -232,5 +258,10 @@ export const models = [
     name: "Event",
     schema: eventSchema,
     collection: "events",
+  },
+  {
+    name: "Comment",
+    schema: commentSchema,
+    collection: "comments",
   },
 ];
