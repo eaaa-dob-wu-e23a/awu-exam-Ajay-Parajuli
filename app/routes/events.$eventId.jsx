@@ -146,16 +146,17 @@ export default function Event() {
 ) : (
   <Fetcher.Form method="post" action="join">
     {event.participants.includes(authUser._id) ? (
-      <button className="bg-red-500 p-2 rounded w-full text-white transition-all duration-200 ease-in-out" type="submit" disabled={Fetcher.state === "submitting"}>
+      <button className="bg-red-500 p-2 rounded w-full text-white transition-all duration-1000 ease-in-out hover:bg-red-600 focus:outline-none focus:bg-red-600" type="submit" disabled={Fetcher.state === "submitting"}>
         {Fetcher.state === "submitting" ? "Saving..." : "Leave"}
       </button>
     ) : (
-      <button className="bg-blue-500 p-2 rounded w-full text-white transition-all duration-200 ease-in-out" type="submit" disabled={Fetcher.state === "submitting"}>
+      <button className="bg-blue-500 p-2 rounded w-full text-white transition-all duration-1000 ease-in-out hover:bg-blue-600 focus:outline-none focus:bg-blue-600" type="submit" disabled={Fetcher.state === "submitting"}>
         {Fetcher.state === "submitting" ? "Saving..." : "Join"}
       </button>
     )}
   </Fetcher.Form>
 )}
+
 
         </div>
         <div className="mb-5">
