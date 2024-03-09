@@ -177,7 +177,7 @@ export default function Event() {
     <p className="text-black pl-2">No comments yet. Be the first one to comment.</p>
   ) : (
     comments.map((comment) => (
-      <div key={comment._id} className="flex p-2">
+      <div key={comment._id} className="flex m-2 p-2 border-b-2">
         <img
           className="rounded-full w-[50px] h-[50px] object-cover"
           src={comment.user_id.image}
@@ -229,8 +229,9 @@ export async function action({ request, params }) {
 
     await mongoose.models.Comment.create(comment);    
 
-    // Redirect to the event page
-    return redirect("#");
+
+    return json({ comment }, { status: 201 });
+
 
   } catch (error) {
     console.log(error);
