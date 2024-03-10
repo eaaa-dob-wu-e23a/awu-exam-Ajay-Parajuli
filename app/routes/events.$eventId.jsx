@@ -24,7 +24,11 @@ export async function loader({ request, params }) {
     const comments = await mongoose.models.Comment.find({ event_id: event._id }).populate("user_id").sort({ createdAt: -1 });// Load the comments for the event
     console.log(comments);
 
-    return json({ event, authUser, users, comments });
+    const relatedEvents = await mongoose.models.Event.find({ tags: { $in: event.tags }, _id: { $ne: event._id } }).limit(3).sort({ tags: -1 });
+
+   console.log(relatedEvents);
+
+    return json({ event, authUser, users, comments, relatedEvents });
   } catch (error) {
     if (error instanceof mongoose.CastError) {
       // Handle CastError here
@@ -56,7 +60,7 @@ export function ErrorBoundary() {
 export default function Event() {
   const Fetcher = useFetcher();
   const actionData = useActionData();
-  const { event, authUser, users, comments } = useLoaderData();
+  const { event, authUser, users, comments, relatedEvents } = useLoaderData();
   const [currentErrorIndex, setCurrentErrorIndex] = useState(0); // State to track the current error index
 
 
@@ -160,7 +164,7 @@ export default function Event() {
 </div>
 
         </div>
-        <div>
+        <div className="xl:flex xl:flex-col xl:justify-start xl:h-[85vh]">
         <div className="mb-5">
         <h3 className="p-2 font-medium text-lg">Comments</h3>
         <div className="bg-red-500 mb-3 rounded w-full text-center">
@@ -174,7 +178,7 @@ export default function Event() {
           <textarea className="w-full p-2 border rounded " name="comment" placeholder="Write a comment"></textarea>
           <button className="bg-[#333] p-2 rounded w-full text-white" type="submit">Submit Comment</button>
         </Form>
-        <div className="pt-5 pb-5 h-[500px] overflow-y-auto">
+        <div className="pt-5 pb-5 h-[300px] overflow-y-auto">
   {comments.length === 0 ? (
     <p className="text-black pl-2">No comments yet. Be the first one to comment.</p>
   ) : (
@@ -194,6 +198,21 @@ export default function Event() {
       </div>
     ))
   )}
+</div>
+</div>
+<div>
+<div className="flex p-2 w-full text-black overflow-x-auto">
+<h3>Relative events</h3>
+    {relatedEvents.map((event) => (
+      <div key={event._id} className="mr-4">
+        <img
+          className="rounded w-[100px] h-[100px] object-cover"
+          src={event.image}
+          alt={event.title}
+        />
+        <h3 className="text-center">{event.title}</h3>
+      </div>
+    ))}
 </div>
 </div>
       </div>
