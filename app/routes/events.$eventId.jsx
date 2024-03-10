@@ -125,7 +125,7 @@ export default function Event() {
           {users.map((user) => (
             <div className="mr-4" key={user._id}>
               <img className="rounded-full w-[50px] h-[50px] object-cover" src={user.image} alt={user.firstname} />
-              <p className="text-center">{user.firstname}</p>
+              <p className="text-center">{authUser._id === user._id ? "You" : user.firstname}</p>
             </div>
           ))}
         </div>
