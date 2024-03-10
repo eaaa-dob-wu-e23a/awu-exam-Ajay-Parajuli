@@ -142,7 +142,7 @@ async function insertData(User, Event, Comment) {
         image: "https://picsum.photos/800/600",
         description: "A fun picnic in the park.",
         title: "Picnic in the Park",
-        date: new Date("2024-03-10"),
+        date: new Date("2024-03-30"),
         created_by: John._id,
         timeFrom: "10:00", 
         timeTo: "14:00",  

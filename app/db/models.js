@@ -78,9 +78,9 @@ const userSchema = new Schema(
       validate: { 
         validator: function (value) {
           // Add your validation logic for description here
-          return value.length === 0 || value.length <= 150; // 
+          return value.length === 0 || value.length <= 300; // 
         },
-        message: "About can either be empty or less than or equal to 150 characters"
+        message: "About can either be empty or less than or equal to 300 characters"
       }
     },
 
@@ -217,7 +217,7 @@ const eventSchema = new Schema(
       }
     },  
 
-    TimeFrom: {
+    timeFrom: {
       type: String,
       default: '00:00', // Default from time value
       validate: {

@@ -78,7 +78,7 @@ export default function Event() {
   return (
     <>
       <div className="mt-[100px] xl:w-full xl:flex xl:justify-around xl:h-[85vh] xl:items-center">
-        <div className="shadow-xl">
+        <div className="shadow-xl xl:w-[60%]">
         <div className="relative w-full">
           <img className="rounded w-full lg:w-full lg:h-[300px] object-cover" src={event.image} alt={event.title} />
           <h1 className="top-1/2 left-1/2 absolute bg-white bg-opacity-75 rounded w-[90%] font-medium text-center text-lg transform -translate-x-1/2 -translate-y-1/2">{event.title}</h1>
@@ -102,15 +102,15 @@ export default function Event() {
               <p className="text-gray-500">Age: {event.created_by.age}</p>
               <p className="text-gray-500">Gender: {event.created_by.gender}</p>
             </div>
-            <div className="pl-2 leading-6">
+            <div className="pl-2 pr-2 leading-6 xl:w-[500px]">
               <h3 className="font-medium">Bio</h3>
-              <p className="text-gray-500">About: {event.created_by.about}</p>
+              <p className="text-gray-500">{event.created_by.about}</p>
             </div>
           </div>
           <div>
             <div className="p-2 leading-7">
               <h3 className="mb-1 font-medium text-lg">About the Event</h3>
-              <p className="text-gray-500">Event date: {formatDate(event.date)}</p>
+              <p className="text-gray-500">Event date: {formatDate(event.date)} | {event.timeFrom} - {event.timeTo} </p>
               <p className="text-gray-500">Event address: {event.address.city}, {event.address.street} {event.address.houseNumber}</p>
               <p className="text-gray-500">Available slots: {event.maxParticipants}</p>
             </div>
@@ -120,7 +120,7 @@ export default function Event() {
             </div>
           </div>
         </div>
-        <h3 className="mb-1 p-2 font-medium text-lg">People who are going</h3>
+        <h3 className="mb-1 pl-2 font-medium text-lg">People who are going</h3>
         <div className="flex p-2 w-full text-black overflow-x-auto">
           {users.map((user) => (
             <div className="mr-4" key={user._id}>
@@ -131,7 +131,7 @@ export default function Event() {
         </div>
         <div>
           {authUser._id === event.created_by._id && (
-            <div className="flex mt-5 pb-5">
+            <div className="flex mb-4 mt-2 xl:mb-2  ">
               <Form action="update">
                 <button className="bg-black mr-5 ml-5 p-1 rounded text-white">Update</button>
               </Form>
@@ -143,15 +143,15 @@ export default function Event() {
           {/* Render the join event button only if the authUser._id is not the same */}
     
           {event.maxParticipants === 0 ? (
-  <p className="bg-black p-2 rounded w-full text-white">Event fully booked</p>
+  <p className="bg-black p-2 rounded w-full text-black">Event fully booked</p>
 ) : (
   <Fetcher.Form method="post" action="join">
     {event.participants.includes(authUser._id) ? (
-      <button className="bg-red-500 p-2 rounded w-full text-white transition-all duration-1000 ease-in-out hover:bg-red-600 focus:outline-none focus:bg-red-600" type="submit" disabled={Fetcher.state === "submitting"}>
+      <button className="bg-red-500 p-2 rounded w-full text-white transition-all duration-1000 ease-in-out hover:bg-red-600 focus:outline-none focus:bg-red-600" type="submit">
         {Fetcher.state === "submitting" ? "Leaving..." : "Leave"}
       </button>
     ) : (
-      <button className="bg-blue-500 p-2 rounded w-full text-white transition-all duration-1000 ease-in-out hover:bg-blue-600 focus:outline-none focus:bg-blue-600" type="submit" disabled={Fetcher.state === "submitting"}>
+      <button className="bg-blue-500 p-2 rounded w-full text-white transition-all duration-1000 ease-in-out hover:bg-blue-600 focus:outline-none focus:bg-blue-600" type="submit">
         {Fetcher.state === "submitting" ? "Joining..." : "Join"}
       </button>
     )}
