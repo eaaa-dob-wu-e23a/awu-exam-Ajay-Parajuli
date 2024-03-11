@@ -16,10 +16,11 @@ export default function EventCard({ post }) {
         <div className="bottom-0 left-0 absolute bg-white bg-opacity-75 pl-5 pt-2 pb-2 w-[80%] rounded">
           <h3 className="font-medium">{post.title}</h3>
           <p>Available slots: {post.maxParticipants}</p>
+          <p>People Participating: {post.participants.length}</p> {/* Modified line */}
           {post.address && (
             <p>Event at: {post.address.city}, {post.address.street} {post.address.houseNumber}</p>
           )}
-             <div className="ml-2 mt-2 mb-2">
+          <div className="ml-2 mt-2 mb-2">
             {post.tags && post.tags.map((tag) => (
               <span
                 key={tag}
@@ -31,8 +32,6 @@ export default function EventCard({ post }) {
           </div>
         </div>
       </div>
-
- 
     </article>
   );
 }

@@ -2,7 +2,7 @@ import { authenticator } from "../services/auth.server";
 import mongoose from "mongoose";
 import { useState } from "react";
 import { json } from "@remix-run/node";
-import { Form, useLoaderData, useFetcher, useRouteError, isRouteErrorResponse, useActionData } from "@remix-run/react";
+import { Form, useLoaderData, Link, useFetcher, useRouteError, isRouteErrorResponse, useActionData } from "@remix-run/react";
 import ErrorMessage from "~/components/ErrorMessage";
 
 
@@ -203,19 +203,27 @@ export default function Event() {
 </div>
 <div>
 <h3 className="font-medium">Related events by tag</h3>
-<div className="flex p-2 w-full text-black flex-wrap ">
-
-    {relatedEvents.map((event) => (
-      <div key={event._id} className="mr-4 flex flex-col">
-        <img
-          className="rounded w-[100px] h-[100px] object-cover"
-          src={event.image}
-          alt={event.title}
-        />
-        <h3 className="w-[100px]">{event.title}</h3>
-      </div>
-    ))}
+<div className="flex p-2 w-full text-black flex-wrap">
+  {relatedEvents.length === 0 ? (
+    <p className="text-black pl-2">No related events found.</p>
+  ) : (
+    relatedEvents.map((event) => (
+      <Link to={`/events/${event._id}`} key={event._id}>
+        <div className="mr-4 flex flex-col">
+          <img
+            className="rounded w-[100px] h-[100px] object-cover"
+            src={event.image}
+            alt={event.title}
+          />
+          <h3 className="w-[100px]">{event.title}</h3>
+        </div>
+      </Link>
+    ))
+  )}
 </div>
+
+
+
 </div>
       </div>
       </div>
@@ -238,7 +246,6 @@ export async function action({ request, params }) {
     const user = await mongoose.models.User.findById(authUser._id);
     const event = await mongoose.models.Event.findById(params.eventId);
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     if (!event) {
       throw new Error('Event not found');

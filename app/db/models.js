@@ -31,7 +31,6 @@ const userSchema = new Schema(
     },
     firstname: {
       type: String,
-      required: true,
       validate: {
         validator: function (value) {
           // Add your validation logic for firstname here
@@ -43,7 +42,6 @@ const userSchema = new Schema(
 
     lastname: {
       type: String,
-      required: true,
       validate: {
         validator: function (value) {
           // Add your validation logic for lastname here
