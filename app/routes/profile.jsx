@@ -34,7 +34,7 @@ export async function loader({ request }) {
 
     return (
         <>
-            <div className="mt-10 xl:flex xl:flex-col xl:justify-center shadow-2xl xl:items-center xl:shadow-none xl:mt-[50px] xl:w-full xl:h-[90vh]">
+            <div className="mt-15 p-5 xl:flex xl:flex-col xl:justify-center shadow-2xl xl:items-center xl:shadow-none xl:mt-[50px] xl:w-full xl:h-[90vh]">
                 <h1 className="p-3 font-medium text- text-2xl">Profile</h1>
                 <div className="flex xl:flex-row flex-col bg-white xl:shadow-2xl xl:w-[40%] xl:max-h-[300px] xl:p-5">
                     <img

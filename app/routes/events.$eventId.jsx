@@ -1,7 +1,7 @@
 import { authenticator } from "../services/auth.server";
 import mongoose from "mongoose";
 import { useState } from "react";
-import { json, redirect } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { Form, useLoaderData, useFetcher, useRouteError, isRouteErrorResponse, useActionData } from "@remix-run/react";
 import ErrorMessage from "~/components/ErrorMessage";
 
@@ -24,9 +24,9 @@ export async function loader({ request, params }) {
     const comments = await mongoose.models.Comment.find({ event_id: event._id }).populate("user_id").sort({ createdAt: -1 });// Load the comments for the event
     console.log(comments);
 
-    const relatedEvents = await mongoose.models.Event.find({ tags: { $in: event.tags }, _id: { $ne: event._id } }).limit(3).sort({ tags: -1 });
+    const relatedEvents = await mongoose.models.Event.find({ tags: { $in: event.tags }, _id: { $ne: event._id } }).limit(3).sort({ tags: 1 });
 
-   console.log(relatedEvents);
+
 
     return json({ event, authUser, users, comments, relatedEvents });
   } catch (error) {
@@ -62,6 +62,7 @@ export default function Event() {
   const actionData = useActionData();
   const { event, authUser, users, comments, relatedEvents } = useLoaderData();
   const [currentErrorIndex, setCurrentErrorIndex] = useState(0); // State to track the current error index
+
 
 
   const formatDate = (dateString) => {
@@ -174,9 +175,9 @@ export default function Event() {
             </p>
           )}
         </div>
-        <Form method="post">
-          <textarea className="w-full p-2 border rounded " name="comment" placeholder="Write a comment"></textarea>
-          <button className="bg-[#333] p-2 rounded w-full text-white" type="submit">Submit Comment</button>
+        <Form method="post" className="text-center">
+          <textarea  className="w-full p-2"  name="comment" placeholder="Write a comment"></textarea>
+          <button className="bg-[#333] p-2 rounded w-[50%] mb-4 text-white" type="submit">Submit Comment</button>
         </Form>
         <div className="pt-5 pb-5 h-[300px] overflow-y-auto">
   {comments.length === 0 ? (
@@ -201,16 +202,17 @@ export default function Event() {
 </div>
 </div>
 <div>
-<div className="flex p-2 w-full text-black overflow-x-auto">
-<h3>Relative events</h3>
+<h3 className="font-medium">Related events by tag</h3>
+<div className="flex p-2 w-full text-black flex-wrap ">
+
     {relatedEvents.map((event) => (
-      <div key={event._id} className="mr-4">
+      <div key={event._id} className="mr-4 flex flex-col">
         <img
           className="rounded w-[100px] h-[100px] object-cover"
           src={event.image}
           alt={event.title}
         />
-        <h3 className="text-center">{event.title}</h3>
+        <h3 className="w-[100px]">{event.title}</h3>
       </div>
     ))}
 </div>
@@ -245,8 +247,8 @@ export async function action({ request, params }) {
     
     const comment = Object.fromEntries(formData);
 
-    comment.user_id = user._id;
-    comment.event_id = event._id;
+    comment.user_id = user._id; // Add the user_id to the comment
+    comment.event_id = event._id; // Add the event_id to the comment
 
     await mongoose.models.Comment.create(comment);    
 
