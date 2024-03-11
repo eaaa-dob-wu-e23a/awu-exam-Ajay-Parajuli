@@ -10,21 +10,18 @@ export const meta = () => {
   };
 
   export async function loader({ request }) {
-
     await authenticator.isAuthenticated(request, {
       failureRedirect: "/signin",
     });
-
   
     try {
-
       const url = new URL(request.url);
       const q = url.searchParams.get("q") || "";
       const filterTag = url.searchParams.get("tag") || "";
-      const sortBy = url.searchParams.get("sort-by") || "createdAt"; // 
-
-
+      const sortBy = url.searchParams.get("sort-by") || "createdAt"; 
+  
       const sortOption = {};
+  
       if (sortBy === "lastupdated") {
         sortOption.updatedAt = -1; // Sort updatedAt in descending order
       } else if (sortBy === "mostparticipants") {
@@ -32,30 +29,26 @@ export const meta = () => {
       } else {
         sortOption[sortBy] = -1; // Sort other fields in descending order
       }
-      
-      
-      
+  
       const query = { title: { $regex: q, $options: "i" } };
+  
       if (filterTag) {
         query.tags = filterTag;
       }
-    
-    
-      const events = await mongoose.models.Event.find(query).populate("created_by").sort(sortOption);
-
+  
+      const events = await mongoose.models.Event.find(query)
+        .populate("created_by")
+        .sort(sortOption);
+  
       const uniqueTags = await mongoose.models.Event.aggregate([
-        // Unwind the array of tags to make each tag a separate document
         { $unwind: "$tags" },
-        // Group by the tag to eliminate duplicates
         { $group: { _id: "$tags" } },
-        // Optionally, you might want to sort the tags alphabetically
         { $sort: { _id: 1 } },
-        // Project to get the desired output format, if needed
         { $project: { tag: "$_id", _id: 0 } },
       ]);
-
+  
       const tags = uniqueTags.map((tagDoc) => tagDoc.tag);
-
+  
       return json({ events, q, tags, filterTag, sortBy });
     } catch (error) {
       console.error(error);
