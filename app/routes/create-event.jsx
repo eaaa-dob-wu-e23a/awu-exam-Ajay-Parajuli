@@ -79,6 +79,23 @@ className="border-2 border-gray-300 p-1 rounded w-full"
 
 <div className="flex flex-col mb-4">
 
+<label className="font-medium text-slate-700 text-sm" htmlFor="Time"> <span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
+Time
+</span></label>
+<div className="flex justify-between">
+  <div className="w-[45%]">
+<label htmlFor="TimeFrom">From:</label>
+<input className="border-2 border-gray-300 p-1 rounded w-full" type="time" id="eventTime" name="timeFrom" min="00:00" max="23:59"/>
+</div>
+<div className="w-[45%]">
+<label htmlFor="TimeTo">To:</label>
+<input className="border-2 border-gray-300 p-1 rounded w-full" type="time" id="eventTime" name="timeTo" min="00:00" max="23:59"/>
+</div>
+</div>
+</div>
+
+<div className="flex flex-col mb-4">
+
 <label className="font-medium text-slate-700 text-sm" htmlFor="maxparticipants"> <span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
 Nr. of Participants
 </span></label>
@@ -158,6 +175,22 @@ Street
 />
 </div>
 
+
+<div className="flex flex-col mb-4">
+
+<label className="font-medium text-slate-700 text-sm" htmlFor="tags">Tags</label>
+<input
+className="border-2 border-gray-300 p-1 rounded w-full"
+  id="tags"
+  type="text"
+  name="tags"
+  aria-label="tags"
+  placeholder="fx. charity, run, walk..."
+  autoComplete="off"
+/>
+
+</div>
+
 <div className="flex flex-col">
               <label className='font-medium text-slate-700 text-sm' htmlFor="image">Image URL:</label>
 
@@ -223,12 +256,18 @@ export async function action({ request }) {
         city,
         street,
         housenumber,
+        timeFrom,
+        timeTo,
+        tags,
         image // Ensure you have an 'image' field in your form
     } = Object.fromEntries(formData);
 
     // Create a new event object
     const newEvent = {
         title,
+        timeFrom,
+        tags: tags.split(",").map((tag) => tag.trim()), // Split tags string into an array of tags
+        timeTo,
         description,
         date, // Convert date string to Date object
         maxParticipants,// Parse maxParticipants to integer
@@ -242,6 +281,7 @@ export async function action({ request }) {
 
     // Add the authenticated user's id to the event
     newEvent.created_by = user._id;
+    newEvent.participants = [user._id];
 
     try {
         // Save the event to the database

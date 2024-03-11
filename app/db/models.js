@@ -80,7 +80,7 @@ const userSchema = new Schema(
           // Add your validation logic for description here
           return value.length === 0 || value.length <= 300; // 
         },
-        message: "About can either be empty or less than or equal to 500 characters"
+        message: "About can either be empty or less than or equal to 300 characters"
       }
     },
 
@@ -215,8 +215,67 @@ const eventSchema = new Schema(
       houseNumber: {
         type: String,
       }
-    },   
+    },  
+
+    timeFrom: {
+      type: String,
+      default: '00:00', // Default from time value
+      validate: {
+          validator: function (time) {
+              const timeRegex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+              return timeRegex.test(time);
+          },
+          message: props => `${props.value} is not a valid time format (HH:MM)`
+      }
   },
+  timeTo: {
+      type: String,
+      default: '23:59', // Default to time value
+      validate: {
+          validator: function (time) {
+              const timeRegex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+              return timeRegex.test(time);
+          },
+          message: props => `${props.value} is not a valid time format (HH:MM)`
+      }
+  },
+    
+    tags: {
+      type: [{
+          type: String,
+          trim: true
+      }],
+      validate: {
+          validator: function (tags) {
+              // Check if the array length is less than or equal to 5
+              if (tags.length > 5) {
+                  return false;
+              }
+              
+              // Validate each tag in the array
+              for (let tag of tags) {
+                  // Check if the tag string contains a space
+                  if (tag.includes(' ')) {
+                      return false;
+                  }
+
+                  // Split the tag string by comma
+                  const tagArray = tag.split(',');
+
+                  // Trim and check if each split tag is empty
+                  for (const t of tagArray) {
+                      if (!t || t.trim() === '') {
+                          return false;
+                      }
+                  }
+              }
+              return true;
+          },
+          message: 'Tags must be comma-separated list - e.g., "charity, run, walk"'
+      }
+  }
+
+    },
   { timestamps: true }  // Automatically include createdAt and updatedAt fields
 );
 
@@ -237,9 +296,9 @@ const commentSchema = new Schema(
       validate: {
         validator: function (value) {
           // Add your validation logic for comment here
-          return value.length >= 10 && value.length <= 300; // Ensuring it's between 30 and 300 characters
+          return value.length >= 10 && value.length <= 200; // Ensuring it's between 30 and 300 characters
         },
-        message: "Comment must be between 10 and 300 characters"
+        message: "Comment must be between 10 and 200 characters"
       }
     }
   },

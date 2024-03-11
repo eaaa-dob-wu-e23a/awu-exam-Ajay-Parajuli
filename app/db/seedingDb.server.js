@@ -23,6 +23,7 @@ async function insertData(User, Event, Comment) {
     firstname: "Dan",
     lastname: "Smith",
     age: 30,
+    about: "I am a fitness enthusiast and love to stay active. I enjoy outdoor activities and meeting new people. I am looking forward to meeting new friends and participating in fun events.",
     gender: "Male",
     password: "Password123",
     languages: ["English", "Spanish"],
@@ -34,6 +35,7 @@ async function insertData(User, Event, Comment) {
     firstname: "Kasper",
     lastname: "Johnson",
     age: 25,
+    about: "I am a software developer and enjoy coding and building new applications. I am also a fitness enthusiast and enjoy outdoor activities. I am looking forward to meeting new friends and participating in fun events.",
     gender: "Female",
     password: "SecurePass456",
     languages: ["English", "French"],
@@ -45,6 +47,7 @@ async function insertData(User, Event, Comment) {
     firstname: "Sarah",
     lastname: "Doe",
     age: 30,
+    about: "I am a gamer and enjoy playing video games. I am also a fitness enthusiast and enjoy outdoor activities. I am looking forward to meeting new friends and participating in fun events.",
     gender: "Male",
     password: "Password123",
     languages: ["English", "French"],
@@ -56,6 +59,7 @@ async function insertData(User, Event, Comment) {
     firstname: "Jane",
     lastname: "Smith",
     age: 25,
+    about: "I am proffesion football player and I love to eat indian food.",
     gender: "Female",
     password: "Secret@123",
     languages: ["Spanish", "German"],
@@ -67,6 +71,7 @@ async function insertData(User, Event, Comment) {
     firstname: "Michael",
     lastname: "Johnson",
     age: 40,
+    about: "I am an actor and enjoy performing in theater. I am also a fitness enthusiast and enjoy outdoor activities. I am looking forward to meeting new friends and participating in fun events.",
     gender: "Male",
     password: "P@ssw0rd!",
     languages: ["English"],
@@ -78,6 +83,7 @@ async function insertData(User, Event, Comment) {
     firstname: "Emily",
     lastname: "Brown",
     age: 28,
+    about: "I love to travel and explore new places. I am also a fitness enthusiast and enjoy outdoor activities. I am looking forward to meeting new friends and participating in fun events.",
     gender: "Female",
     password: "StrongPassword123",
     languages: ["English", "Italian"],
@@ -89,6 +95,7 @@ async function insertData(User, Event, Comment) {
     firstname: "David",
     lastname: "Lee",
     age: 35,
+    about: "My passion is music and I enjoy playing the guitar. I am also a fitness enthusiast and enjoy outdoor activities.",
     gender: "Male",
     password: "SecurePass789",
     languages: ["English", "Mandarin"],
@@ -100,6 +107,7 @@ async function insertData(User, Event, Comment) {
     firstname: "Sophia",
     lastname: "Garcia",
     age: 31,
+    about: "I am a fashion designer and enjoy creating new designs. I enjoy outdoor activities. I am looking forward to meeting new friends and participating in fun events.",
     gender: "Female",
     password: "Passw0rd!321",
     languages: ["English", "Spanish"],
@@ -111,6 +119,7 @@ async function insertData(User, Event, Comment) {
     firstname: "James",
     lastname: "Miller",
     age: 40,
+    about: "I am a chef and enjoy cooking new dishes. I enjoy outdoor activities. I am looking forward to meeting new friends and participating in fun events.",
     gender: "Male",
     password: "Secret123!",
     languages: ["English", "German"],
@@ -122,154 +131,185 @@ async function insertData(User, Event, Comment) {
     firstname: "Emma",
     lastname: "Martinez",
     age: 27,
+    about: "I am a photographer and enjoy capturing moments. I enjoy outdoor activities. I am looking forward to meeting new friends and participating in fun events.",
     gender: "Female",
     password: "Passw0rd@456",
     languages: ["English", "French"],
   });
 
   const events = await Event.insertMany([
- {
-      image: "https://picsum.photos/800/600",
-      description: "A fun picnic in the park.",
-      title: "Picnic in the Park",
-      date: new Date("2024-03-10"),
-      created_by: John._id,
-      participants: [John._id, Kasper._id],
-      maxParticipants: 20,
-      address: {
-        city: "Miami",
-        street: "Ocean Drive",
-        houseNumber: ""
-      }
+    {
+        image: "https://picsum.photos/800/600",
+        description: "A fun picnic in the park.",
+        title: "Picnic in the Park",
+        date: new Date("2024-03-30"),
+        created_by: John._id,
+        timeFrom: "10:00", 
+        timeTo: "14:00",  
+        participants: [John._id, Kasper._id],
+        maxParticipants: 20,
+        address: {
+            city: "Miami",
+            street: "Ocean Drive",
+            houseNumber: ""
+        },
+        tags: ["picnic", "park", "fun"]
     },
     {
-      image: "https://picsum.photos/800/600",
-      description: "Charity run for a local cause.",
-      title: "Charity Run",
-      date: new Date("2024-04-15"),
-      created_by: Dan._id,
-      participants: [Kasper._id, Dan._id],
-      maxParticipants: 10,
-      address: {
-        city: "New York",
-        street: "Central Park West",
-        houseNumber: "87"
-      }
+        image: "https://picsum.photos/800/600",
+        description: "Charity run for a local cause.",
+        title: "Charity Run",
+        date: new Date("2024-04-15"),
+        created_by: Dan._id,
+        timeFrom: "08:00",
+        timeTo: "12:00",
+        participants: [Kasper._id, Dan._id],
+        maxParticipants: 10,
+        address: {
+            city: "New York",
+            street: "Central Park West",
+            houseNumber: "87"
+        },
+        tags: ["charity", "run", "cause"]
     },
     {
-      image: "https://picsum.photos/800/600",
-      description: "Hiking Adventure - Nature Trails",
-      date: "2024-07-05",
-      title: "Hiking Adventure",
-      created_by: John._id,
-      participants: [John._id, Maria._id, Sarah._id],
-      maxParticipants: 5,
-      address: {
-        city: "London",
-        street: "Trafalgar Sqare",
-        houseNumber: "73"
-      }
+        image: "https://picsum.photos/800/600",
+        description: "Hiking Adventure - Nature Trails",
+        date: "2024-07-05",
+        title: "Hiking Adventure",
+        timeFrom: "09:00",
+        timeTo: "15:00",
+        created_by: John._id,
+        participants: [John._id, Maria._id, Sarah._id],
+        maxParticipants: 5,
+        address: {
+            city: "London",
+            street: "Trafalgar Square",
+            houseNumber: "73"
+        },
+        tags: ["hiking", "adventure", "nature"]
     },
     {
-      image: "https://picsum.photos/800/600",
-      description: "Photography Workshop - Capturing Moments",
-      title: "Photography Workshop",
-      date: "2024-08-15",
-      created_by: Maria._id,
-      participants: [Maria._id, Sarah._id, Dan._id, Kasper._id, John._id],
-      maxParticipants: 8,
-      address: {
-        city: "Denver",
-        street: "Mountain View Road",
-        houseNumber: "20"
-      }
+        image: "https://picsum.photos/800/600",
+        description: "Photography Workshop - Capturing Moments",
+        title: "Photography Workshop",
+        date: "2024-08-15",
+        timeFrom: "11:00",
+        timeTo: "17:00",
+        created_by: Maria._id,
+        participants: [Maria._id, Sarah._id, Dan._id, Kasper._id, John._id],
+        maxParticipants: 8,
+        address: {
+            city: "Denver",
+            street: "Mountain View Road",
+            houseNumber: "20"
+        },
+        tags: ["photography", "workshop", "capturing"]
     },
     {
-      image: "https://picsum.photos/800/600",
-      description: "Zumba Class - Italian Dance Fitness",
-      title: "Zumba Class",
-      date: "2024-06-10",
-      created_by: Sarah._id,
-      participants: [Sarah._id, Dan._id, Kasper._id, John._id, Maria._id],
-      maxParticipants: 9,
-      address: {
-        city: "Paris",
-        street: "Rue de Rivoli",
-        houseNumber: "45"
-      }
-    },
-    
-    {
-      image: "https://picsum.photos/800/600",
-      description: "Soccer tournament for charity.",
-      title: "Charity Soccer Tournament",
-      date: new Date("2024-09-20"),
-      created_by: Emily._id,
-      participants: [Emily._id, David._id],
-      maxParticipants: 15,
-      address: {
-        city: "Los Angeles",
-        street: "Sunset Boulevard",
-        houseNumber: "123"
-      }
+        image: "https://picsum.photos/800/600",
+        description: "Zumba Class - Italian Dance Fitness",
+        title: "Zumba Class",
+        date: "2024-06-10",
+        timeFrom: "18:00",
+        timeTo: "20:00",
+        created_by: Sarah._id,
+        participants: [Sarah._id, Dan._id, Kasper._id, John._id, Maria._id],
+        maxParticipants: 9,
+        address: {
+            city: "Paris",
+            street: "Rue de Rivoli",
+            houseNumber: "45"
+        },
+        tags: ["zumba", "fitness", "dance"]
     },
     {
-      image: "https://picsum.photos/800/600",
-      description: "Art exhibition showcasing local artists.",
-      title: "Local Art Exhibition",
-      date: new Date("2024-10-25"),
-      created_by: Emily._id,
-      participants: [Emily._id, Sophia._id],
-      maxParticipants: 20,
-      address: {
-        city: "San Francisco",
-        street: "Market Street",
-        houseNumber: "456"
-      }
+        image: "https://picsum.photos/800/600",
+        description: "Soccer tournament for charity.",
+        title: "Charity Soccer Tournament",
+        date: new Date("2024-09-20"),
+        created_by: Emily._id,
+        timeFrom: "14:00",
+        timeTo: "18:00",
+        participants: [Emily._id, David._id],
+        maxParticipants: 15,
+        address: {
+            city: "Los Angeles",
+            street: "Sunset Boulevard",
+            houseNumber: "123"
+        },
+        tags: ["charity", "soccer", "tournament"]
     },
     {
-      image: "https://picsum.photos/800/600",
-      description: "Cooking class learning international cuisines.",
-      title: "International Cooking Class",
-      date: new Date("2024-11-15"),
-      created_by: Sophia._id,
-      participants: [Sophia._id, James._id],
-      maxParticipants: 12,
-      address: {
-        city: "Chicago",
-        street: "Lake Shore Drive",
-        houseNumber: "789"
-      }
+        image: "https://picsum.photos/800/600",
+        description: "Art exhibition showcasing local artists.",
+        title: "Local Art Exhibition",
+        date: new Date("2024-10-25"),
+        timeFrom: "12:00",
+        timeTo: "16:00",
+        created_by: Emily._id,
+        participants: [Emily._id, Sophia._id],
+        maxParticipants: 20,
+        address: {
+            city: "San Francisco",
+            street: "Market Street",
+            houseNumber: "456"
+        },
+        tags: ["art", "exhibition", "local"]
     },
     {
-      image: "https://picsum.photos/800/600",
-      description: "Book club discussing contemporary literature.",
-      title: "Contemporary Literature Book Club",
-      date: new Date("2024-12-10"),
-      created_by: James._id,
-      participants: [James._id, Emma._id],
-      maxParticipants: 10,
-      address: {
-        city: "Boston",
-        street: "Newbury Street",
-        houseNumber: "1011"
-      }
+        image: "https://picsum.photos/800/600",
+        description: "Cooking class learning international cuisines.",
+        title: "International Cooking Class",
+        date: new Date("2024-11-15"),
+        created_by: Sophia._id,
+        timeFrom: "17:00",
+        timeTo: "21:00",
+        participants: [Sophia._id, James._id],
+        maxParticipants: 12,
+        address: {
+            city: "Chicago",
+            street: "Lake Shore Drive",
+            houseNumber: "789"
+        },
+        tags: ["cooking", "international", "cuisine"]
     },
     {
-      image: "https://picsum.photos/800/600",
-      description: "Gardening workshop exploring urban gardening techniques.",
-      title: "Urban Gardening Workshop",
-      date: new Date("2025-01-05"),
-      created_by: Emma._id,
-      participants: [Emma._id, Dan._id, Kasper._id],
-      maxParticipants: 20,
-      address: {
-        city: "Seattle",
-        street: "Pike Place",
-        houseNumber: "1213"
-      }
+        image: "https://picsum.photos/800/600",
+        description: "Book club discussing contemporary literature.",
+        title: "Contemporary Literature Book Club",
+        date: new Date("2024-12-10"),
+        timeFrom: "16:00",
+        timeTo: "18:00",
+        created_by: James._id,
+        participants: [James._id, Emma._id],
+        maxParticipants: 10,
+        address: {
+            city: "Boston",
+            street: "Newbury Street",
+            houseNumber: "1011"
+        },
+        tags: ["book", "literature", "contemporary"]
+    },
+    {
+        image: "https://picsum.photos/800/600",
+        description: "Gardening workshop exploring urban gardening techniques.",
+        title: "Urban Gardening Workshop",
+        date: new Date("2025-01-05"),
+        created_by: Emma._id,
+        timeFrom: "10:00",
+        timeTo: "14:00",
+        participants: [Emma._id, Dan._id, Kasper._id],
+        maxParticipants: 20,
+        address: {
+            city: "Seattle",
+            street: "Pike Place",
+            houseNumber: "1213"
+        },
+        tags: ["gardening", "workshop", "urban"]
     }
-  ]);
+]);
+
 
   const comments = await Comment.insertMany([
     {

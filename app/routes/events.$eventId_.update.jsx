@@ -116,6 +116,23 @@ className="border-2 border-gray-300 p-1 rounded w-full"
 
 <div className="flex flex-col mb-4">
 
+<label className="font-medium text-slate-700 text-sm" htmlFor="Time"> <span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
+Time
+</span></label>
+<div className="flex justify-between">
+  <div className="w-[45%]">
+<label htmlFor="TimeFrom">From:</label>
+<input className="border-2 border-gray-300 p-1 rounded w-full" type="time" id="eventTime" name="timeFrom" min="00:00" max="23:59"  defaultValue={event.timeFrom} />
+</div>
+<div className="w-[45%]">
+<label htmlFor="TimeTo">To:</label>
+<input className="border-2 border-gray-300 p-1 rounded w-full" type="time" id="eventTime" name="timeTo" min="00:00" max="23:59"  defaultValue={event.timeTo}/>
+</div>
+</div>
+</div>
+
+<div className="flex flex-col mb-4">
+
 <label className="font-medium text-slate-700 text-sm" htmlFor="maxparticipants"> <span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
 Nr. of Participants
 </span></label>
@@ -197,6 +214,22 @@ Street
   defaultValue={event.description}
   autoComplete="off"
 />
+</div>
+
+<div className="flex flex-col mb-4">
+
+<label className="font-medium text-slate-700 text-sm" htmlFor="tags">Tags</label>
+<input
+className="border-2 border-gray-300 p-1 rounded w-full"
+  id="tags"
+  type="text"
+  name="tags"
+  aria-label="tags"
+  defaultValue={event.tags}
+  placeholder="fx. charity, run, walk..."
+  autoComplete="off"
+/>
+
 </div>
 
 <div className="flex flex-col">
