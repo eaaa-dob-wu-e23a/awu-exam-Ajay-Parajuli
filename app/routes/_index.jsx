@@ -8,6 +8,6 @@ export async function loader({ request }) {
   // return redirect("/events");
   return await authenticator.isAuthenticated(request, {
     successRedirect: "/events",
-    failureRedirect: "/signin"
+    failureRedirect: "/signin",
   });
 }

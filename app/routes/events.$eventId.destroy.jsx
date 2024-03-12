@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import { authenticator } from "../services/auth.server";
 
 export async function action({ params, request }) {
-
   const authUser = await authenticator.isAuthenticated(request, {
     failureRedirect: "/signin",
   });
