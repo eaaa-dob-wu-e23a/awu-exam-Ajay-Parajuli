@@ -10,7 +10,7 @@ export async function action({ params, request }) {
   const user = await mongoose.models.User.findById(authUser._id);
   const event = await mongoose.models.Event.findById(params.eventId);
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await new Promise((resolve) => setTimeout(resolve, 500)); // 
 
 
   const participantIndex = event.participants.indexOf(user._id);
