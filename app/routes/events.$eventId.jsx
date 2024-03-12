@@ -176,8 +176,8 @@ export default function Event() {
           )}
         </div>
         <Form method="post" className="text-center rounded">
-          <textarea  className="w-full p-2 border-border border-2 rounded"  name="comment" placeholder="Write a comment"></textarea>
-          <button className="bg-btnone p-2 rounded w-[50%] mb-4 text-primary" type="submit">Submit Comment</button>
+          <textarea  className="w-full bg-background text-secondary p-2 border-border border-2 rounded"  name="comment" placeholder="Write a comment"></textarea>
+          <button className="bg-btnone p-2 rounded w-full mb-4 text-primary" type="submit">Submit Comment</button>
         </Form>
         <div className="pt-5 pb-5 h-[300px] overflow-y-auto">
   {comments.length === 0 ? (

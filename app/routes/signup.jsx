@@ -29,7 +29,7 @@ console.log(actionData);
         <label htmlFor="firstname"><span className="block after:content-['*'] after:ml-0.5 font-medium text-secondary text-sm after:text-btntwo">
     Firstname
   </span></label>
-        <input className="border-2 border-border p-1 rounded w-[97%]"
+        <input className="border-2 bg-background text-secondary border-border p-1 rounded w-[97%]"
           id="firstname"
           type="text"
           name="firstname"
@@ -44,7 +44,7 @@ console.log(actionData);
     Lastname
   </span>
     
-        <input className="border-2 border-g p-1 rounded w-full"
+        <input className="border-2 bg-background text-secondary border-g p-1 rounded w-full"
           id="lastname"
           type="text"
           name="lastname"
@@ -65,7 +65,7 @@ console.log(actionData);
         <label htmlFor="mail"> <span className="block after:content-['*'] after:ml-0.5 font-medium text-secondary text-sm after:text-btntwo">
     Email
   </span></label>
-        <input className="border-2 border-border p-1 rounded w-full"
+        <input className="border-2 bg-background text-secondary border-border p-1 rounded w-full"
           id="mail"
           type="text"
 
@@ -83,7 +83,7 @@ console.log(actionData);
 
 
         <input
-        className="border-2 border-border p-1 rounded w-full"
+        className="border-2 border-border bg-background text-secondary p-1 rounded w-full"
           id="password"
           type="password"
           name="password"
@@ -96,7 +96,7 @@ console.log(actionData);
 <div className="flex flex-col mb-4">
         <label className="font-medium text-secondary text-sm" htmlFor="age">Age</label>
         <input
-        className="border-2 border-border p-1 rounded w-full"
+        className="border-2 border-border bg-background text-secondary p-1 rounded w-full"
           id="address"
           type="number"
           name="age"
@@ -111,7 +111,7 @@ console.log(actionData);
 
         <label className="font-medium text-secondary text-sm" htmlFor="languages">Languages</label>
         <input
-        className="border-2 border-gray-300 p-1 rounded w-full"
+        className="border-2 border-border bg-background text-secondary p-1 rounded w-full"
           id="languages"
           type="text"
           name="languages"
@@ -124,13 +124,13 @@ console.log(actionData);
 
         <fieldset className="flex mb-4">
           <legend className="font-medium text-secondary text-sm">Gender:</legend>
-          <input className="mr-2" type="radio" id="male" name="gender" value="Male" />
+          <input className="mr-2 bg-background text-secondary" type="radio" id="male" name="gender" value="Male" />
           <label className="mr-4 text-secondary" htmlFor="male">Male</label>
           <br />
-          <input className="mr-2" type="radio" id="female" name="gender" value="Female" />
+          <input className="mr-2 bg-background text-secondary" type="radio" id="female" name="gender" value="Female" />
           <label className="mr-4 text-secondary" htmlFor="female">Female</label>
           <br />
-          <input className="mr-2" type="radio" id="other" name="gender" value="Other" />
+          <input className="mr-2 bg-background text-secondary" type="radio" id="other" name="gender" value="Other" />
           <label className="mr-4 text-secondary" htmlFor="other">Other</label>
         </fieldset>
         <div className="mt-2 w-full text-primary">

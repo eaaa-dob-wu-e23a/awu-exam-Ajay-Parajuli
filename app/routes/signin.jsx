@@ -1,6 +1,5 @@
 import { Form, NavLink, useLoaderData } from "@remix-run/react";
-import { useState } from "react";
-import { json, redirect } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { authenticator } from "../services/auth.server";
 import { sessionStorage } from "../services/session.server";
 
@@ -29,7 +28,6 @@ export async function loader({ request }) {
 export default function SignIn() {
   const loaderData = useLoaderData();
   console.log(loaderData);
-  const [currentErrorIndex, setCurrentErrorIndex] = useState(0); 
 
   return (
     <div className="flex flex-col justify-center items-center w-full xl:h-[100vh]">
@@ -51,7 +49,7 @@ export default function SignIn() {
         <label htmlFor="mail"> <span className="block after:content-['*'] after:ml-0.5 font-medium text-secondary text-sm after:text-btntwo">
     Email
   </span></label>
-        <input className="border-2 border-border p-1 rounded w-full"
+        <input className="border-2 bg-background text-secondary border-border p-1 rounded w-full"
           id="mail"
           type="email"
           name="mail"
@@ -67,7 +65,7 @@ export default function SignIn() {
 
 
         <input
-        className="border-2 border-border p-1 rounded w-full"
+        className="border-2 border-border bg-background text-secondary p-1 rounded w-full"
           id="password"
           type="password"
           name="password"

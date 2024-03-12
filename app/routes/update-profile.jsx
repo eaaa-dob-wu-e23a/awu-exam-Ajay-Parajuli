@@ -45,7 +45,7 @@ return (
 <label htmlFor="firstname"><span className="block after:content-['*'] after:ml-0.5 font-medium text-secondary text-sm after:text-btntwo">
 Firstname
 </span></label>
-<input className="border-2 border-border p-1 rounded w-[97%]"
+<input className="border-2 bg-background text-secondary border-border p-1 rounded w-[97%]"
   id="firstname"
   type="text"
   name="firstname"
@@ -61,7 +61,7 @@ Firstname
 Lastname
 </span>
 
-<input className="border-2 border-border p-1 rounded w-full"
+<input className="border-2 bg-background text-secondary border-border p-1 rounded w-full"
   id="lastname"
   type="text"
   name="lastname"
@@ -82,7 +82,7 @@ Lastname
 <div className="flex flex-col mb-4">
 <label className="font-medium text-secondary text-sm" htmlFor="address">Age</label>
 <input
-className="border-2 border-border p-1 rounded w-full"
+className="border-2 border-border bg-background text-secondary p-1 rounded w-full"
   id="age"
   type="number"
   name="age"
@@ -98,7 +98,7 @@ className="border-2 border-border p-1 rounded w-full"
 
 <label className="font-medium text-secondary text-sm" htmlFor="languages">Languages</label>
 <input
-className="border-2 border-border p-1 rounded w-full"
+className="border-2 border-border bg-background text-secondary p-1 rounded w-full"
   id="languages"
   type="text"
   name="languages"
@@ -112,13 +112,13 @@ className="border-2 border-border p-1 rounded w-full"
 
 <fieldset className="flex mb-4">
   <legend className="font-medium text-secondary text-sm">Gender:</legend>
-  <input className="mr-2" type="radio" defaultChecked={user.gender === "Male"} id="male" name="gender" value="Male" />
+  <input className="mr-2 bg-background text-secondary" type="radio" defaultChecked={user.gender === "Male"} id="male" name="gender" value="Male" />
   <label className="mr-4 text-secondary" htmlFor="male">Male</label>
   <br />
-  <input className="mr-2" type="radio" id="female" name="gender" defaultChecked={user.gender === "Female"} value="Female" />
+  <input className="mr-2 bg-background text-secondary" type="radio" id="female" name="gender" defaultChecked={user.gender === "Female"} value="Female" />
   <label className="mr-4 text-secondary" htmlFor="female">Female</label>
   <br />
-  <input className="mr-2" type="radio" id="other" name="gender" defaultChecked={user.gender === "Other"} value="Other" />
+  <input className="mr-2 bg-background text-secondary" type="radio" id="other" name="gender" defaultChecked={user.gender === "Other"} value="Other" />
   <label className="mr-4 text-secondary" htmlFor="other">Other</label>
 </fieldset>
 <div className="flex flex-col">
@@ -126,7 +126,7 @@ className="border-2 border-border p-1 rounded w-full"
 
               <input
                 name="image"
-                className="border-2 border-border p-1 rounded w-full"
+                className="border-2 bg-background text-secondary border-border p-1 rounded w-full"
                 defaultValue={user.image}
                 type="url"
                 onChange={e => setImage(e.target.value)}

@@ -47,7 +47,7 @@ Title
 </span>
 </label>
 <input
-className="border-2 border-border p-1 rounded w-full"
+className="border-2 border-border bg-background text-secondary p-1 rounded w-full"
   id="title"
   type="text"
   name="title"
@@ -65,7 +65,7 @@ className="border-2 border-border p-1 rounded w-full"
 Date
 </span></label>
 <input
-className="border-2 border-border p-1 rounded w-full"
+className="border-2 border-border bg-background text-secondary p-1 rounded w-full"
   id="date"
   type="date"
   name="date"
@@ -84,11 +84,11 @@ Time
 <div className="flex justify-between">
   <div className="w-[45%]">
 <label className="text-secondary text-sm" htmlFor="TimeFrom">From:</label>
-<input className="border-2 border-border p-1 rounded w-full" type="time" id="eventTime" name="timeFrom" min="00:00" max="23:59"/>
+<input className="border-2 bg-background text-secondary border-border p-1 rounded w-full" type="time" id="eventTime" name="timeFrom" min="00:00" max="23:59"/>
 </div>
 <div className="w-[45%]">
 <label className="text-secondary text-sm" htmlFor="TimeTo">To:</label>
-<input className="border-2 border-border p-1 rounded w-full" type="time" id="eventTime" name="timeTo" min="00:00" max="23:59"/>
+<input className="border-2 bg-background text-secondary border-border p-1 rounded w-full" type="time" id="eventTime" name="timeTo" min="00:00" max="23:59"/>
 </div>
 </div>
 </div>
@@ -99,7 +99,7 @@ Time
 Nr. of Participants
 </span></label>
 <input
-className="border-2 border-border p-1 rounded w-full"
+className="border-2 border-border bg-background text-secondary p-1 rounded w-full"
   id="MaxParticipants"
   type="number"
   name="maxParticipants"
@@ -120,7 +120,7 @@ className="border-2 border-border p-1 rounded w-full"
 <label htmlFor="housenr"><span className="block after:content-['*'] after:ml-0.5 font-medium text-secondary text-sm after:text-red-500">
 City
 </span></label>
-<input className="border-2 border-border p-1 rounded w-[90%]"
+<input className="border-2 bg-background text-secondary border-border p-1 rounded w-[90%]"
   id="city"
   type="text"
   name="city"
@@ -136,7 +136,7 @@ City
 Street
 </span></label>
 
-<input className="border-2 border-border p-1 rounded w-[90%]"
+<input className="border-2 bg-background text-secondary border-border p-1 rounded w-[90%]"
   id="street"
   type="text"
   name="street"
@@ -151,7 +151,7 @@ Street
 
 <label className="text-secondary text-sm font-medium" htmlFor="housenr">Housenr.</label>
 
-<input className="border-2 border-border p-1 rounded w-[90%]"
+<input className="border-2 bg-background text-secondary border-border p-1 rounded w-[90%]"
   id="housenumber"
   type="text"
   name="housenumber"
@@ -165,7 +165,7 @@ Street
 
 <div className="w-full mb-4">
 <label htmlFor="description">Description</label>
-<textarea className="border-2 border-border p-1 rounded w-full h-[100px] resize-none "
+<textarea className="border-2 bg-background text-secondary border-border p-1 rounded w-full h-[100px] resize-none "
   id="description"
   type="text"
   name="description"
@@ -179,7 +179,7 @@ Street
 
 <label className="font-medium text-secondary text-sm" htmlFor="tags">Tags</label>
 <input
-className="border-2 border-border p-1 rounded w-full"
+className="border-2 border-border bg-background text-secondary p-1 rounded w-full"
   id="tags"
   type="text"
   name="tags"
@@ -195,7 +195,7 @@ className="border-2 border-border p-1 rounded w-full"
 
               <input
                 name="image"
-                className="border-2 border-border p-1 rounded w-full"
+                className="border-2 border-border bg-background text-secondary p-1 rounded w-full"
                 type="url"
                 placeholder="Paste an image URL..."
                 onChange={(e) => setImage(e.target.value)}
@@ -265,7 +265,7 @@ export async function action({ request }) {
     const newEvent = {
         title,
         timeFrom,
-        tags: tags.split(",").map((tag) => tag.trim()), // Split tags string into an array of tags
+        tags: tags.toLowerCase().split(",").map((tag) => tag.trim()), // Split tags string into an array of tags and make them lowercase
         timeTo,
         description,
         date, // Convert date string to Date object
