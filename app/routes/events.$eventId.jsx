@@ -2,6 +2,7 @@ import { authenticator } from "../services/auth.server";
 import mongoose from "mongoose";
 import { useState } from "react";
 import { json } from "@remix-run/node";
+
 import {
   Form,
   useLoaderData,
@@ -77,7 +78,14 @@ export default function Event() {
   const Fetcher = useFetcher();
   const actionData = useActionData();
   const { event, authUser, users, comments, relatedEvents } = useLoaderData();
-  const [currentErrorIndex, setCurrentErrorIndex] = useState(0); // State to track the current error index
+  const [currentErrorIndex, setCurrentErrorIndex] = useState(0);
+  const [isParticipant, setIsParticipant] = useState(
+    event.participants.includes(authUser._id),
+  );
+  const handleJoinLeave = () => {
+    // Assuming Fetcher.Form handles submitting the form
+    setIsParticipant(!isParticipant);
+  };
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -215,22 +223,23 @@ export default function Event() {
                 Event fully booked
               </p>
             ) : (
-              <Fetcher.Form method="post" action="join">
-                {event.participants.includes(authUser._id) ? (
-                  <button
-                    className="bg-btntwo p-2 rounded w-full text-primary transition-all duration-1000 ease-in-out focus:outline-none"
-                    type="submit"
-                  >
-                    {Fetcher.state === "submitting" ? "Leaving..." : "Leave"}
-                  </button>
-                ) : (
-                  <button
-                    className="bg-btnone p-2 rounded w-full text-primary transition-all duration-1000 ease-in-out  focus:outline-none "
-                    type="submit"
-                  >
-                    {Fetcher.state === "submitting" ? "Joining..." : "Join"}
-                  </button>
-                )}
+              <Fetcher.Form
+                method="post"
+                action="join"
+                onSubmit={handleJoinLeave}
+              >
+                <button
+                  className={`bg-${isParticipant ? "btntwo" : "btnone"} p-2 rounded w-full text-primary transition-all duration-1000 ease-in-out focus:outline-none`}
+                  type="submit"
+                >
+                  {Fetcher.state === "submitting"
+                    ? isParticipant
+                      ? "Joining..."
+                      : "Leaving..."
+                    : isParticipant
+                      ? "Leave"
+                      : "Join"}
+                </button>
               </Fetcher.Form>
             )}
           </div>

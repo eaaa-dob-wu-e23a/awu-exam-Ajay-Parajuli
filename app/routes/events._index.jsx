@@ -65,7 +65,7 @@ export default function Events() {
   }
 
   return (
-    <div className="relative">
+    <div className="">
       <h1 className="p-2 font-semibold text-3xl text-center text-secondary">
         GetFit Events
       </h1>
@@ -88,7 +88,9 @@ export default function Events() {
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-secondary">Filter by tag </label>
+            <label htmlFor="filter" className="text-secondary">
+              Filter by tag{" "}
+            </label>
             <select
               className="border-border border-2 p-2 w-[250px] rounded text-secondary bg-background"
               name="tag"
@@ -104,7 +106,9 @@ export default function Events() {
             </select>
           </div>
           <div className="flex flex-col">
-            <label className="text-secondary">Sort by </label>
+            <label htmlFor="sort" className="text-secondary">
+              Sort by{" "}
+            </label>
             <select
               className="border-border bg-background text-secondary border-2 p-2 w-[250px] rounded"
               name="sort-by"
