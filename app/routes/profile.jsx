@@ -30,7 +30,7 @@ export async function loader({ request }) {
 
   export default function Profile() {
     const {user, myevents} = useLoaderData(); // Using useLoaderData hook to access loader data
-    const [image, setImage] = useState(user.image);
+    const [image] = useState(user.image);
 
     return (
         <>
@@ -66,7 +66,7 @@ export async function loader({ request }) {
                     </div>
                 </div>
                 <div className="xl:w-[40%]">
-                    <h2 className="mt-5 font-medium text-2xl">Registered events</h2>
+                    <h2 className="mt-5 font-medium text-2xl text-secondary">My Registered events</h2>
                     <div className="flex flex-col justify-start xl:h-[400px] overflow-y-auto border-b-4 border-border rounded">
                         {myevents.map((event) => (
                             <div key={event._id} className="flex justify-between items-center border-border p-2 border-b-2">
