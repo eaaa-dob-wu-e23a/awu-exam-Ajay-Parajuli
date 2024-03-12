@@ -24,9 +24,7 @@ export const meta = () => {
   
       if (sortBy === "lastupdated") {
         sortOption.updatedAt = -1; // Sort updatedAt in descending order
-      } else if (sortBy === "mostparticipants") {
-        sortOption.participants = -1; // Sort participants array length in ascending order
-      } else {
+      }  else {
         sortOption[sortBy] = -1; // Sort other fields in descending order
       }
   
@@ -79,13 +77,13 @@ export default function Events() {
           <label htmlFor="search" className="text-secondary">
           Search by event title
           </label>
-          <input className="border-border border-2 p-2 w-[250px] rounded" defaultValue={q}  aria-label="Search by caption"  placeholder="Search" type="search" name="q" />
+          <input className="border-border bg-background text-secondary border-2 p-2 w-[250px] rounded" defaultValue={q}  aria-label="Search by caption"  placeholder="Search" type="search" name="q" />
           </div>
           <div className="flex flex-col">
           <label className="text-secondary">
           Filter by tag{" "}
           </label>
-          <select className="border-border border-2 p-2 w-[250px]  rounded" name="tag">
+          <select className="border-border border-2 p-2 w-[250px] rounded text-secondary bg-background" name="tag">
           <option className="text-secondary" value="">select tag</option>
             {tags.map((tag) => (
               <option key={tag} value={tag}>
@@ -100,10 +98,9 @@ export default function Events() {
 
           Sort by{" "}
           </label>
-          <select className="border-border border-2 p-2 w-[250px] rounded" name="sort-by" defaultValue={sortBy}>
+          <select className="border-border bg-background text-secondary border-2 p-2 w-[250px] rounded" name="sort-by" defaultValue={sortBy}>
             <option value="createdAt">newest</option>
             <option value="lastupdated">Recently Updated</option>
-            <option value="mostparticipants">most participants</option>
           </select>
           </div>
       
@@ -118,7 +115,7 @@ export default function Events() {
     </Link>
   ))
 ) : (
-  <p>No events available with the given query.</p>
+  <p className="text-secondary">No events available with the given query.</p>
 )}
 
       </section>
