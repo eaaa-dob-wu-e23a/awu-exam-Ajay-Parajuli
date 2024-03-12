@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 
 export default function SignUp() {
   const actionData = useActionData();
+
   const [currentErrorIndex, setCurrentErrorIndex] = useState(0); // State to track the current error index
 
   console.log(actionData);

@@ -33,7 +33,7 @@ export default function Profile() {
         <h1 className="p-3 text-secondary font-medium text- text-2xl">
           Profile
         </h1>
-        <div className="flex xl:flex-row flex-col bg-background xl:shadow-2xl xl:w-[40%] xl:max-h-[300px] xl:p-5 border-b-2 border-border ">
+        <div className="flex xl:flex-row flex-col bg-background xl:shadow-2xl xl:w-[50%] xl:max-h-[300px] xl:p-5 border-b-2 border-border ">
           <img
             src={
               image ? image : "https://placehold.co/600x400?text=Profile+image"

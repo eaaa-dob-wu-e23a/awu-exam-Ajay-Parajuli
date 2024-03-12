@@ -17,16 +17,23 @@ const userSchema = new Schema(
     },
 
     mail: {
-      type: String,
-      required: true, // Ensure user emails are required
+      type: String, // Ensure user emails are required
       unique: true, // Ensure user emails are unique
       validate: {
         validator: function (value) {
           // Regular expression to validate email format
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (value.length === 0) {
+            return false; // Email is required
+          }
           return emailRegex.test(value);
         },
-        message: "Invalid email address",
+        message: (props) => {
+          if (props.value.length === 0) {
+            return "Email is required";
+          }
+          return "Invalid email address";
+        },
       },
     },
     firstname: {
@@ -58,17 +65,23 @@ const userSchema = new Schema(
     gender: String,
 
     password: {
-      type: String,
-      required: true, // Ensure user passwords are required
+      type: String, // Ensure user passwords are required
       select: false, // Automatically exclude from query results
       validate: {
         validator: function (value) {
           // Regular expression to validate password format
           const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z]).{7,}$/;
+          if (value.length === 0) {
+            return false; // Password is required
+          }
           return passwordRegex.test(value);
         },
-        message:
-          "Password must contain at least 7 letters and one uppercase letter",
+        message: (props) => {
+          if (props.value.length === 0) {
+            return "Password is required";
+          }
+          return "Password must contain at least 7 letters and one uppercase letter";
+        },
       },
     },
 

@@ -1,4 +1,4 @@
-import { Form, NavLink, useLoaderData } from "@remix-run/react";
+import { Form, NavLink, useLoaderData, useFetcher } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { authenticator } from "../services/auth.server";
 import { sessionStorage } from "../services/session.server";
@@ -26,12 +26,13 @@ export async function loader({ request }) {
 
 export default function SignIn() {
   const loaderData = useLoaderData();
+  const fetch = useFetcher();
   console.log(loaderData);
 
   return (
     <div className="flex flex-col justify-center items-center w-full xl:h-[100vh]">
       <h1 className="mt-2 p-2 font-bold text-3xl text-secondary">GetFit</h1>
-      <Form
+      <fetch.Form
         noValidate
         className="flex flex-col shadow-2xl p-4 rounded-xl w-[95%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[40%] 2xl:w-[30%] border-border border-2"
         id="sign-up-form"
@@ -62,7 +63,6 @@ export default function SignIn() {
             name="mail"
             aria-label="mail"
             placeholder="Type your mail..."
-            autoComplete="off"
           />
         </div>
         <div className="flex flex-col mb-4">
@@ -85,9 +85,10 @@ export default function SignIn() {
         <div className="mt-2 w-full text-primary">
           <button
             className="bg-btnone p-2 rounded w-full text-lg"
+            disabled={fetch.state === "submitting"}
             type="submit"
           >
-            Sign in
+            {fetch.state === "submitting" ? "Processing..." : "Signin"}
           </button>
         </div>
         <div className="mt-5 text-center">
@@ -98,7 +99,7 @@ export default function SignIn() {
             </NavLink>
           </p>
         </div>
-      </Form>
+      </fetch.Form>
     </div>
   );
 }
@@ -107,6 +108,7 @@ export async function action({ request }) {
   // we call the method with the name of the strategy we want to use and the
   // request object, optionally we pass an object with the URLs we want the user
   // to be redirected to after a success or a failure
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   return await authenticator.authenticate("user-pass", request, {
     successRedirect: "/events",
     failureRedirect: "/signin",
