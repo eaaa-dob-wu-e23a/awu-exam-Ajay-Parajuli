@@ -12,9 +12,9 @@ const userSchema = new Schema(
           // Regular expression to validate URL format
           return /^(http|https):\/\/[^\s$.?#].[^\s]*$/.test(value);
         },
-        message: "Invalid image URL"
-      }
-    }, 
+        message: "Invalid image URL",
+      },
+    },
 
     mail: {
       type: String,
@@ -26,8 +26,8 @@ const userSchema = new Schema(
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           return emailRegex.test(value);
         },
-        message: "Invalid email address"
-      }
+        message: "Invalid email address",
+      },
     },
     firstname: {
       type: String,
@@ -36,8 +36,8 @@ const userSchema = new Schema(
           // Add your validation logic for firstname here
           return value.length > 0; // For example, ensuring it's not empty
         },
-        message: "First name is required"
-      }
+        message: "First name is required",
+      },
     },
 
     lastname: {
@@ -47,12 +47,12 @@ const userSchema = new Schema(
           // Add your validation logic for lastname here
           return value.length > 0; // For example, ensuring it's not empty
         },
-        message: "Last name is required"
-      }
+        message: "Last name is required",
+      },
     },
 
     age: {
-      type: Number, 
+      type: Number,
     },
 
     gender: String,
@@ -67,49 +67,57 @@ const userSchema = new Schema(
           const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z]).{7,}$/;
           return passwordRegex.test(value);
         },
-        message: "Password must contain at least 7 letters and one uppercase letter"
-      }
+        message:
+          "Password must contain at least 7 letters and one uppercase letter",
+      },
     },
 
     about: {
       type: String,
-      validate: { 
+      validate: {
         validator: function (value) {
           // Add your validation logic for description here
-          return value.length === 0 || value.length <= 300; // 
+          return value.length === 0 || value.length <= 300; //
         },
-        message: "About can either be empty or less than or equal to 300 characters"
-      }
+        message:
+          "About can either be empty or less than or equal to 300 characters",
+      },
     },
 
     languages: {
       type: [String],
       validate: {
-        validator: function(languages) {
+        validator: function (languages) {
           // Validate each language in the array
           for (let language of languages) {
             // Check if the language string contains a space
-            if (language.includes(' ')) {
+            if (language.includes(" ")) {
               return false;
             }
-    
+
+            if (language.length === 0) {
+              return true;
+            }
+
             // Split the language string by comma
-            const splitLanguages = language.split(',');
-    
+            const splitLanguages = language.split(",");
+
             for (const splitLanguage of splitLanguages) {
               // Trim the split language and check if it's empty
-              if (!splitLanguage || splitLanguage.trim() === '') {
+              if (!splitLanguage.trim()) {
                 return false;
               }
             }
           }
+          // If all languages are valid
           return true;
         },
-        message: 'Languages must be comma separated list - Fx "english, spanish, french"'
-      }
+        message:
+          'Languages must be comma separated list - Fx "english, spanish, french"',
+      },
     },
   },
-  { timestamps: true } // Automatically include createdAt and updatedAt fields
+  { timestamps: true }, // Automatically include createdAt and updatedAt fields
 );
 
 userSchema.pre("save", async function (next) {
@@ -134,31 +142,34 @@ const eventSchema = new Schema(
           // Add your validation logic for title here
           return value.length > 0 && value.length <= 50; // Ensuring it's not empty and has a length less than or equal to 10 characters
         },
-        message: "Title is required and must be less than or equal to 50 characters"
-      }
+        message:
+          "Title is required and must be less than or equal to 50 characters",
+      },
     },
-
-
 
     image: {
       type: String,
       validate: {
         validator: function (value) {
           // Regular expression to validate URL format
-          return value.length === 0 || /^(http|https):\/\/[^\s$.?#].[^\s]*$/.test(value);
+          return (
+            value.length === 0 ||
+            /^(http|https):\/\/[^\s$.?#].[^\s]*$/.test(value)
+          );
         },
-        message: "Invalid image URL"
-      }
-    }, 
+        message: "Invalid image URL",
+      },
+    },
     description: {
       type: String,
-      validate: { 
+      validate: {
         validator: function (value) {
           // Add your validation logic for description here
-          return value.length === 0 || value.length <= 300; // 
+          return value.length === 0 || value.length <= 300; //
         },
-        message: "Description can either be empty or less than or equal to 500 characters"
-      }
+        message:
+          "Description can either be empty or less than or equal to 500 characters",
+      },
     },
 
     date: {
@@ -168,126 +179,124 @@ const eventSchema = new Schema(
           // Check if the provided date is greater than the current date
           return value > new Date();
         },
-        message: "Event date must be in the future"
-      }
+        message: "Event date must be in the future",
+      },
     },
     created_by: {
       type: Schema.Types.ObjectId,
-      ref: 'User'
+      ref: "User",
     },
-    participants: [{
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    }], 
+    participants: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     maxParticipants: {
       type: Number,
       validate: {
         validator: function (value) {
           // Check if the provided maxParticipants is greater than 0 and less than 20
-            return value > 0 && value < 26;
+          return value > 0 && value < 26;
         },
-        message: "Max participants must be greater than 0 and less than 26"
-      }
+        message: "Max participants must be greater than 0 and less than 26",
+      },
     },
-    
+
     address: {
       city: {
         type: String,
-        validate : {
+        validate: {
           validator: function (value) {
             // Add your validation logic for city here
             return value.length > 0; // For example, ensuring it's not empty
           },
-          message: "City is required"
-        }
+          message: "City is required",
+        },
       },
       street: {
         type: String,
-        validate : {
+        validate: {
           validator: function (value) {
             return value.length > 0; // For example, ensuring it's not empty
           },
-          message: "Street is required"
-        }
+          message: "Street is required",
+        },
       },
       houseNumber: {
         type: String,
-      }
-    },  
+      },
+    },
 
     timeFrom: {
       type: String,
-      default: '00:00', // Default from time value
+      default: "00:00", // Default from time value
       validate: {
-          validator: function (time) {
-              const timeRegex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
-              return timeRegex.test(time);
-          },
-          message: props => `${props.value} is not a valid time format (HH:MM)`
-      }
-  },
-  timeTo: {
-      type: String,
-      default: '23:59', // Default to time value
-      validate: {
-          validator: function (time) {
-              const timeRegex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
-              return timeRegex.test(time);
-          },
-          message: props => `${props.value} is not a valid time format (HH:MM)`
-      }
-  },
-    
-    tags: {
-      type: [{
-          type: String,
-          trim: true
-      }],
-      validate: {
-          validator: function (tags) {
-              // Check if the array length is less than or equal to 5
-              if (tags.length > 5) {
-                  return false;
-              }
-              
-              // Validate each tag in the array
-              for (let tag of tags) {
-                  // Check if the tag string contains a space
-                  if (tag.includes(' ')) {
-                      return false;
-                  }
-
-                  // Split the tag string by comma
-                  const tagArray = tag.split(',');
-
-                  // Trim and check if each split tag is empty
-                  for (const t of tagArray) {
-                      if (!t || t.trim() === '') {
-                          return false;
-                      }
-                  }
-              }
-              return true;
-          },
-          message: 'Tags must be comma-separated list - e.g., "charity, run, walk"'
-      }
-  }
-
+        validator: function (time) {
+          const timeRegex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+          return timeRegex.test(time);
+        },
+        message: (props) => `${props.value} is not a valid time format (HH:MM)`,
+      },
     },
-  { timestamps: true }  // Automatically include createdAt and updatedAt fields
+    timeTo: {
+      type: String,
+      default: "23:59", // Default to time value
+      validate: {
+        validator: function (time) {
+          const timeRegex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+          return timeRegex.test(time);
+        },
+        message: (props) => `${props.value} is not a valid time format (HH:MM)`,
+      },
+    },
+
+    tags: {
+      type: [String],
+      validate: {
+        validator: function (languages) {
+          // Validate each language in the array
+          for (let tag of languages) {
+            // Check if the language string contains a space
+            if (tag.includes(" ")) {
+              return false;
+            }
+
+            if (tag.length === 0) {
+              return true;
+            }
+
+            // Split the tag string by comma
+            const splitLanguages = tag.split(",");
+
+            for (const splitLanguage of splitLanguages) {
+              // Trim the split tag and check if it's empty
+              if (!splitLanguage.trim()) {
+                return false;
+              }
+            }
+          }
+          // If all languages are valid
+          return true;
+        },
+        message: 'Tags must be comma separated list - Fx "charity, run, walk"',
+      },
+    },
+  },
+  { timestamps: true }, // Automatically include createdAt and updatedAt fields
 );
 
 const commentSchema = new Schema(
   {
     event_id: {
       type: Schema.Types.ObjectId,
-      ref: 'Event',
-      required: true
+      ref: "Event",
+      required: true,
     },
     user_id: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true
+      ref: "User",
+      required: true,
     },
     comment: {
       type: String,
@@ -296,14 +305,12 @@ const commentSchema = new Schema(
           // Add your validation logic for comment here
           return value.length >= 10 && value.length <= 200; // Ensuring it's between 30 and 300 characters
         },
-        message: "Comment must be between 10 and 200 characters"
-      }
-    }
+        message: "Comment must be between 10 and 200 characters",
+      },
+    },
   },
-  { timestamps: true } // Automatically include createdAt and updatedAt fields
+  { timestamps: true }, // Automatically include createdAt and updatedAt fields
 );
-
-
 
 export const models = [
   {

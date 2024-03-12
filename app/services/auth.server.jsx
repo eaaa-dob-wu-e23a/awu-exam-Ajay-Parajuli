@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 // Create an instance of the authenticator, pass a generic with what
 // strategies will return and will store in the session
 export let authenticator = new Authenticator(sessionStorage, {
-  sessionErrorKey: "sessionErrorKey" // keep in sync
+  sessionErrorKey: "sessionErrorKey", // keep in sync
 });
 
 // Tell the Authenticator to use the form strategy
@@ -34,7 +34,7 @@ authenticator.use(
     console.log(user);
     return user;
   }),
-  "user-pass"
+  "user-pass",
 );
 
 async function verifyUser({ mail, password }) {
