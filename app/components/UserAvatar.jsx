@@ -6,11 +6,11 @@ export default function UserAvatar({ user }) {
       }
  
     return (
-      <div className="flex border-gray-200 pb-4 border-b-2">
+      <div className="flex border-border pb-2 mb-2 border-b-2">
         <img className="rounded-full w-[50px] h-[50px] object-cover" src={user.image} alt={user.firstname} />
         <span className="ml-2">
-          <h3 className="font-medium">{user.firstname} {user.lastname}</h3>
-          <p>{user.mail}</p>
+          <h3 className="font-medium text-secondary">{user.firstname} {user.lastname}</h3>
+          <p className="text-secondary">{user.mail}</p>
         </span>
       </div>
     );

@@ -8,8 +8,33 @@
 /* Your custom styles here */
 
 
+
+:root {
+    --background: 255 255 255;
+    --border: 209 213 219;
+    --primary: 255 255 255;
+    --secondary: 51 65 85;
+    --btnone:  59 130 246;
+    --btntwo: 239 68 68; 
+}
+
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: 0 0 0;
+        --border: 71, 71, 72;
+        --primary:  255 255 255;
+        --secondary: 255 255 255;
+        --btnone:  59 130 246;
+        --btntwo: 239 68 68; 
+    }
+}
+
+
 body{
     font-family: 'Poppins', sans-serif;
+    background-color: rgb(var(--background));
+  
 }
 
 ::-webkit-scrollbar { 

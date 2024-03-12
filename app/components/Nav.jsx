@@ -2,14 +2,14 @@ import { NavLink } from "@remix-run/react";
 
 export default function Nav() {
   return (
-    <nav className="fixed inset-x-0 top-0 p-4 flex justify-around items-center bg-black hover:shadow-lg h-16 font-medium text-white z-50">
-      <NavLink className="hover:bg-white w-full  flex justify-center hover:text-black cursor-pointer px-4 py-2" to="/events">
+    <nav className="relative p-4 flex justify-around items-center bg-border hover:shadow-lg h-16 font-medium text-secondary z-50">
+      <NavLink className="hover:bg-btnone w-full flex justify-center hover:text-primary cursor-pointer px-4 py-2 hover:rounded" to="/events">
         Events
       </NavLink>
-      <NavLink className="hover:bg-white w-full flex justify-center hover:text-black cursor-pointer px-4 py-2" to="/create-event">
+      <NavLink className="hover:bg-btnone w-full flex justify-center hover:text-primary cursor-pointer px-4 py-2 hover:rounded" to="/create-event">
         Create
       </NavLink>
-      <NavLink className="hover:bg-white w-full flex justify-center hover:text-black cursor-pointer px-4 py-2" to="/profile">
+      <NavLink className="hover:bg-btnone w-full flex justify-center hover:text-primary cursor-pointer px-4 py-2 hover:rounded" to="/profile">
         Profile
       </NavLink>
     </nav>
