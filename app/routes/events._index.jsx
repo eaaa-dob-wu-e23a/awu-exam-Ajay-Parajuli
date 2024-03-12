@@ -49,7 +49,7 @@ export const meta = () => {
   
       const tags = uniqueTags.map((tagDoc) => tagDoc.tag);
   
-      return json({ events, q, tags, filterTag, sortBy });
+      return json({ events, q, tags, sortBy });
     } catch (error) {
       console.error(error);
       throw new Response("Internal Server Error", { status: 500 });
@@ -59,7 +59,7 @@ export const meta = () => {
 
 
 export default function Events() {
-    const { events, q, tags, sortBy, filterTag } = useLoaderData();
+    const { events, q, tags, sortBy } = useLoaderData();
     const submit = useSubmit();
 
     function handleSearchFilterAndSort(event) {
@@ -72,21 +72,21 @@ export default function Events() {
 
     return (
         <div className="relative">
-          <h1 className="p-2 font-semibold text-3xl">GetFit Events</h1>
+          <h1 className="p-2 font-semibold text-3xl text-center text-secondary">GetFit Events</h1>
           <div className="mt-4 p-2 lg:p-4">
             <Form className="flex flex-row flex-wrap gap-6 w-full md:justify-center " onChange={handleSearchFilterAndSort}>
               <div className="flex flex-col">
-          <label htmlFor="search">
+          <label htmlFor="search" className="text-secondary">
           Search by event title
           </label>
-          <input className="border p-2 w-[250px] rounded" defaultValue={q}  aria-label="Search by caption"  placeholder="Search" type="search" name="q" />
+          <input className="border-border border-2 p-2 w-[250px] rounded" defaultValue={q}  aria-label="Search by caption"  placeholder="Search" type="search" name="q" />
           </div>
           <div className="flex flex-col">
-          <label>
+          <label className="text-secondary">
           Filter by tag{" "}
           </label>
-          <select className="border p-2 w-[250px]  rounded" name="tag">
-          <option value="">select tag</option>
+          <select className="border-border border-2 p-2 w-[250px]  rounded" name="tag">
+          <option className="text-secondary" value="">select tag</option>
             {tags.map((tag) => (
               <option key={tag} value={tag}>
                 {tag}
@@ -95,12 +95,12 @@ export default function Events() {
           </select>
           </div>
 <div className="flex flex-col">
-           <label>
+           <label className="text-secondary">
        
 
           Sort by{" "}
           </label>
-          <select className="border p-2 w-[250px] rounded" name="sort-by" defaultValue={sortBy}>
+          <select className="border-border border-2 p-2 w-[250px] rounded" name="sort-by" defaultValue={sortBy}>
             <option value="createdAt">newest</option>
             <option value="lastupdated">Recently Updated</option>
             <option value="mostparticipants">most participants</option>
@@ -109,7 +109,7 @@ export default function Events() {
       
           </Form> 
           </div>
-         <section className="flex flex-row flex-wrap gap-6 mt-5 p-2 lg:p-4 w-full md:justify-center">
+         <section className="flex flex-row flex-wrap gap-6 mt-5 p-2 lg:p-4 w-full md:justify-center bg-background">
         
          {events.length > 0 ? (
   events.map((event) => (

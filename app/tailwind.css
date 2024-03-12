@@ -19,16 +19,7 @@
 }
 
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background: 0 0 0;
-        --border: 71, 71, 72;
-        --primary:  255 255 255;
-        --secondary: 255 255 255;
-        --btnone:  59 130 246;
-        --btntwo: 239 68 68; 
-    }
-}
+
 
 
 body{
