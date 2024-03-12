@@ -1,5 +1,5 @@
 import { json, redirect } from "@remix-run/node";
-import { Form, useLoaderData, useNavigate, useActionData } from "@remix-run/react";
+import { Form, useNavigate, useActionData } from "@remix-run/react";
 import mongoose from "mongoose";
 import { useState } from "react";
 import { authenticator } from "../services/auth.server";
@@ -37,18 +37,18 @@ export default function CreateEvent() {
     
 
 return(
-    <div className=" flex flex-col justify-center items-center w-full md:h-[90vh] xl:h-[100vh] relative">
-<Form className="flex flex-col shadow-2xl p-4 rounded-xl w-[95%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[50%] xl:h-[80vh] xl:mt-[10px] xl:overflow-y-auto" id="sign-up-form" method="post">
-<h2 className="border-gray-300 mb-4 pb-3 border-b-2 font-medium text-xl">Create Event</h2>
+    <div className=" flex flex-col justify-center items-center w-full md:h-[90vh] xl:h-[90vh] relative">
+<Form className="flex bg-background flex-col shadow-2xl p-4 rounded-xl w-[95%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[50%] xl:h-[80vh] xl:mt-[10px] xl:overflow-y-auto border-2 border-border" id="sign-up-form" method="post">
+<h2 className="border-border mb-4 pb-3 border-b-2 font-medium text-xl text-secondary">Create Event</h2>
 
 <div className="flex flex-col mb-4">
-<label className="font-medium text-slate-700 text-sm" htmlFor="title">
-<span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
+<label className="font-medium text-secondary text-sm" htmlFor="title">
+<span className="block after:content-['*'] after:ml-0.5 font-medium text-secondary text-sm after:text-btntwo">
 Title
 </span>
 </label>
 <input
-className="border-2 border-gray-300 p-1 rounded w-full"
+className="border-2 border-border p-1 rounded w-full"
   id="title"
   type="text"
   name="title"
@@ -62,11 +62,11 @@ className="border-2 border-gray-300 p-1 rounded w-full"
 
 <div className="flex flex-col mb-4">
 
-<label className="font-medium text-slate-700 text-sm" htmlFor="Date"> <span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
+<label className="font-medium text-secondary text-sm" htmlFor="Date"> <span className="block after:content-['*'] after:ml-0.5 font-medium text-secondary text-sm after:text-btntwo">
 Date
 </span></label>
 <input
-className="border-2 border-gray-300 p-1 rounded w-full"
+className="border-2 border-border p-1 rounded w-full"
   id="date"
   type="date"
   name="date"
@@ -79,28 +79,28 @@ className="border-2 border-gray-300 p-1 rounded w-full"
 
 <div className="flex flex-col mb-4">
 
-<label className="font-medium text-slate-700 text-sm" htmlFor="Time"> <span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
+<label className="font-medium text-secondary text-sm" htmlFor="Time"> <span className="block after:content-['*'] after:ml-0.5 font-medium text-secondary text-sm after:text-btntwo">
 Time
 </span></label>
 <div className="flex justify-between">
   <div className="w-[45%]">
-<label htmlFor="TimeFrom">From:</label>
-<input className="border-2 border-gray-300 p-1 rounded w-full" type="time" id="eventTime" name="timeFrom" min="00:00" max="23:59"/>
+<label className="text-secondary text-sm" htmlFor="TimeFrom">From:</label>
+<input className="border-2 border-border p-1 rounded w-full" type="time" id="eventTime" name="timeFrom" min="00:00" max="23:59"/>
 </div>
 <div className="w-[45%]">
-<label htmlFor="TimeTo">To:</label>
-<input className="border-2 border-gray-300 p-1 rounded w-full" type="time" id="eventTime" name="timeTo" min="00:00" max="23:59"/>
+<label className="text-secondary text-sm" htmlFor="TimeTo">To:</label>
+<input className="border-2 border-border p-1 rounded w-full" type="time" id="eventTime" name="timeTo" min="00:00" max="23:59"/>
 </div>
 </div>
 </div>
 
 <div className="flex flex-col mb-4">
 
-<label className="font-medium text-slate-700 text-sm" htmlFor="maxparticipants"> <span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
+<label className="font-medium text-secondary text-sm" htmlFor="maxparticipants"> <span className="block after:content-['*'] after:ml-0.5 font-medium text-secondary text-sm after:text-red-500">
 Nr. of Participants
 </span></label>
 <input
-className="border-2 border-gray-300 p-1 rounded w-full"
+className="border-2 border-border p-1 rounded w-full"
   id="MaxParticipants"
   type="number"
   name="maxParticipants"
@@ -118,10 +118,10 @@ className="border-2 border-gray-300 p-1 rounded w-full"
 <div className="flex justify-between mb-4 w-full">
 <div className="w-[90%]">
 
-<label htmlFor="housenr"><span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
+<label htmlFor="housenr"><span className="block after:content-['*'] after:ml-0.5 font-medium text-secondary text-sm after:text-red-500">
 City
 </span></label>
-<input className="border-2 border-gray-300 p-1 rounded w-[90%]"
+<input className="border-2 border-border p-1 rounded w-[90%]"
   id="city"
   type="text"
   name="city"
@@ -133,11 +133,11 @@ City
 <div className="w-[90%] flex justify-center flex-col">
 
 <label htmlFor="housenr">
-    <span className="block after:content-['*'] after:ml-0.5 font-medium text-slate-700 text-sm after:text-red-500">
+    <span className="block after:content-['*'] after:ml-0.5 font-medium text-secondary text-sm after:text-red-500">
 Street
 </span></label>
 
-<input className="border-2 border-gray-300 p-1 rounded w-[90%]"
+<input className="border-2 border-border p-1 rounded w-[90%]"
   id="street"
   type="text"
   name="street"
@@ -150,9 +150,9 @@ Street
 
 <div className="w-[90%] flex justify-end flex-col">
 
-<label className="text-slate-700 text-sm font-medium" htmlFor="housenr">Housenr.</label>
+<label className="text-secondary text-sm font-medium" htmlFor="housenr">Housenr.</label>
 
-<input className="border-2 border-gray-300 p-1 rounded w-[90%]"
+<input className="border-2 border-border p-1 rounded w-[90%]"
   id="housenumber"
   type="text"
   name="housenumber"
@@ -166,7 +166,7 @@ Street
 
 <div className="w-full mb-4">
 <label htmlFor="description">Description</label>
-<textarea className="border-2 border-gray-300 p-1 rounded w-full h-[100px] resize-none "
+<textarea className="border-2 border-border p-1 rounded w-full h-[100px] resize-none "
   id="description"
   type="text"
   name="description"
@@ -178,9 +178,9 @@ Street
 
 <div className="flex flex-col mb-4">
 
-<label className="font-medium text-slate-700 text-sm" htmlFor="tags">Tags</label>
+<label className="font-medium text-secondary text-sm" htmlFor="tags">Tags</label>
 <input
-className="border-2 border-gray-300 p-1 rounded w-full"
+className="border-2 border-border p-1 rounded w-full"
   id="tags"
   type="text"
   name="tags"
@@ -192,11 +192,11 @@ className="border-2 border-gray-300 p-1 rounded w-full"
 </div>
 
 <div className="flex flex-col">
-              <label className='font-medium text-slate-700 text-sm' htmlFor="image">Image URL:</label>
+              <label className='font-medium text-secondary text-sm' htmlFor="image">Image URL:</label>
 
               <input
                 name="image"
-                className="border-2 border-gray-300 p-1 rounded w-full"
+                className="border-2 border-border p-1 rounded w-full"
                 type="url"
                 placeholder="Paste an image URL..."
                 onChange={(e) => setImage(e.target.value)}
@@ -228,9 +228,9 @@ className="border-2 border-gray-300 p-1 rounded w-full"
 </div>
 
             
-<div className="flex justify-between mt-2 w-full text-white">
-  <button className="bg-black p-2 rounded text-lg" type="submit">Create</button>
-  <button className="bg-red-600 p-2 rounded text-lg" onClick={handleCancel}>Cancel</button>
+<div className="flex justify-between mt-2 w-full text-primary">
+  <button className="bg-btnone p-2 rounded text-lg" type="submit">Create</button>
+  <button className="bg-btntwo p-2 rounded text-lg" onClick={handleCancel}>Cancel</button>
 </div>
 </Form>
 </div>
