@@ -2,9 +2,6 @@ import UserAvatar from "./UserAvatar";
 
 export default function EventCard({ post }) {
   // Check if post exists and if post.image is not null
-  if (!post || !post.image) {
-    return null; // or return some fallback UI
-  }
 
   return (
     <article className="relative shadow-inner mb-8 p-2  border rounded bg-background ">

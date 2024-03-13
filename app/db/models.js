@@ -10,7 +10,10 @@ const userSchema = new Schema(
       validate: {
         validator: function (value) {
           // Regular expression to validate URL format
-          return /^(http|https):\/\/[^\s$.?#].[^\s]*$/.test(value);
+          return (
+            value.length === 0 ||
+            /^(http|https):\/\/[^\s$.?#].[^\s]*$/.test(value)
+          );
         },
         message: "Invalid image URL",
       },
@@ -162,6 +165,7 @@ const eventSchema = new Schema(
 
     image: {
       type: String,
+      required: true,
       validate: {
         validator: function (value) {
           // Regular expression to validate URL format
