@@ -31,7 +31,7 @@ export default function CreateEvent() {
   }
 
   return (
-    <div className=" flex flex-col justify-center items-center w-full md:h-[90vh] xl:h-[90vh] relative">
+    <div className=" flex flex-col justify-center items-center w-full md:h-[95vh] xl:h-[90vh] relative">
       <Form
         className="flex bg-background flex-col shadow-2xl p-4 rounded-xl w-[95%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[50%] xl:h-[80vh] xl:mt-[10px] xl:overflow-y-auto border-b-2 border-l-2 border-border"
         id="sign-up-form"
@@ -220,7 +220,9 @@ export default function CreateEvent() {
 
         <div className="flex flex-col">
           <label className="font-medium text-secondary text-sm" htmlFor="image">
-            Image URL:
+            <span className="block after:content-['*'] after:ml-0.5 font-medium text-secondary text-sm after:text-red-500">
+              Image Url:
+            </span>
           </label>
 
           <input
